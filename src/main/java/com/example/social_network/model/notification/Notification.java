@@ -1,5 +1,6 @@
-package com.example.social_network.model;
+package com.example.social_network.model.notification;
 
+import com.example.social_network.model.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
