@@ -34,11 +34,9 @@ public class User {
     private Date birthday;
     private String avatar;
     private String hobby;
-    private String role;
+    private String role= "user";
     private String address;
-    private Date  createdDate;
+    private Date createdDate;
     private boolean isBlock=false;
-
-
 
 }

@@ -2,7 +2,6 @@ package com.example.social_network.controller.loginsession;
 
 import com.example.social_network.model.User;
 import com.example.social_network.service.user.IUserService;
-import com.example.social_network.service.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,7 @@ import java.util.Optional;
 public class LoginSession {
 
     @Autowired
-    UserService userService;
+    IUserService userService;
 
 
     @PostMapping("/login")

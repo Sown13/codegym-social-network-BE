@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService {
+public class USerService implements IUserService {
 
     @Autowired
-    UserRepo userRepo;
+    private UserRepo userRepo;
+//    @Autowired
+//    IUserFriendService userFriendService;
 
     @Override
     public Iterable<User> findAll() {
