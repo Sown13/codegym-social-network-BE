@@ -26,6 +26,8 @@ public class User {
     private String hobby;
     private String role;
     private String address;
+    private Date  createdDate;
+
 
 
 }
