@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 
 @RestController
 @CrossOrigin("*")
@@ -33,4 +35,13 @@ public class UserRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @GetMapping("/{id}")
+    private ResponseEntity<Optional<User>>findUserByid(@PathVariable ("id")Long id){
+        Optional<User>user=userService.findById(id);
+        if(user.isPresent()){
+            return new ResponseEntity<>(user,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

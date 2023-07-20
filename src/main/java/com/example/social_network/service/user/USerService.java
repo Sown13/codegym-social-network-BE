@@ -1,7 +1,9 @@
 package com.example.social_network.service.user;
 
 import com.example.social_network.model.User;
+import com.example.social_network.model.friend.UserFriend;
 import com.example.social_network.repo.UserRepo;
+import com.example.social_network.service.friend.IUserFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ public class USerService implements IUserService {
 
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    IUserFriendService userFriendService;
 
     @Override
     public Iterable<User> findAll() {
@@ -45,19 +49,14 @@ public class USerService implements IUserService {
         }
     }
 
-
-
     @Override
     public void remove(Long id) {
 
     }
 
-//    public boolean isExist(String name, String email) {
-//        if (userRepo.findUsersByAccountName(name).isEmpty() && userRepo.findUsersByEmail(email).isPresent()) {
-//            return false;
-//        }
-//        return true;
-//    }
 
-
+    @Override
+    public Iterable<User> findAllUsersByAccount(String account) {
+         return userRepo.findUsersByAccountNameContaining(account);
+    }
 }
