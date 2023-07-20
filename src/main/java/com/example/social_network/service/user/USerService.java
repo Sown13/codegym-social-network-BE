@@ -1,12 +1,11 @@
 package com.example.social_network.service.user;
 
 import com.example.social_network.model.User;
-import com.example.social_network.model.friend.UserFriend;
+import com.example.social_network.repo.UserFriendRepo;
 import com.example.social_network.repo.UserRepo;
 import com.example.social_network.service.friend.IUserFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -14,8 +13,8 @@ public class USerService implements IUserService {
 
     @Autowired
     private UserRepo userRepo;
-    @Autowired
-    IUserFriendService userFriendService;
+//    @Autowired
+//    IUserFriendService userFriendService;
 
     @Override
     public Iterable<User> findAll() {
@@ -24,11 +23,13 @@ public class USerService implements IUserService {
 
     @Override
     public Optional<User> findById(Long id) {
-        return userRepo.findById(id);
+      return userRepo.findById(id);
     }
 
+
+
     @Override
-    public User save(User user) throws Exception{
+    public User save(User user) throws Exception {
         if (userRepo.findUsersByAccountName(user.getAccountName()).isPresent()) {
             throw new Exception("Username already exists");
         }
@@ -57,6 +58,6 @@ public class USerService implements IUserService {
 
     @Override
     public Iterable<User> findAllUsersByAccount(String account) {
-         return userRepo.findUsersByAccountNameContaining(account);
+        return userRepo.findUsersByAccountNameContaining(account);
     }
 }

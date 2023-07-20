@@ -34,4 +34,8 @@ public class UserFriendServiceService implements IUserFriendService {
     }
 
 
+    @Override
+    public Long countFriend(Long id) {
+        return  userFriendRepo.countAllByUserFriend(id);
+    }
 }
