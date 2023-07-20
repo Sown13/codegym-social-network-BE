@@ -13,4 +13,6 @@ import org.springframework.stereotype.Repository;
 public interface UserFriendRepo extends JpaRepository<UserFriend, Long> {
     @Query("SELECT COUNT(*) FROM UserFriend u WHERE u.isAccepted = true AND u.targetUser = :userId")
     Long countAllByUserFriend(@Param("userId") Long userId);
+    @Query("SELECT uf.targetUser FROM UserFriend uf WHERE uf.sourceUser.userId = :id and uf.isAccepted = true")
+    Iterable<UserFriend> findUserFriendsByUserId(Long id);
 }

@@ -2,7 +2,6 @@ package com.example.social_network.controller;
 
 import com.example.social_network.model.User;
 import com.example.social_network.repo.UserFriendRepo;
-import com.example.social_network.service.friend.IUserFriendService;
 import com.example.social_network.service.user.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

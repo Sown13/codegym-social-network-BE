@@ -1,6 +1,4 @@
 package com.example.social_network.service.notification;
-
-import com.example.social_network.model.User;
 import com.example.social_network.model.notification.Notification;
 import com.example.social_network.repo.NotificationRepo;
 import org.springframework.beans.factory.annotation.Autowired;

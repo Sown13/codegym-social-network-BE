@@ -17,7 +17,11 @@ public class NotificationRestController {
 
     @PostMapping()
     public ResponseEntity<Void> saveNotification(@RequestBody Notification notification) {
-        notificationService.save(notification);
+        try {
+            notificationService.save(notification);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 

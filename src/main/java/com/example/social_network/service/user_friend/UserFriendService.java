@@ -32,4 +32,9 @@ public class UserFriendService implements IUserFriendService {
     public void remove(Long id) {
         userFriendRepo.deleteById(id);
     }
+    @Override
+    public Iterable<UserFriend> findAllFriendsByUserId(Long id) {
+        return userFriendRepo.findUserFriendsByUserId(id);
+    }
+
 }

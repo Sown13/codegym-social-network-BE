@@ -24,7 +24,7 @@ public class UserFriendServiceService implements IUserFriendService {
     }
 
     @Override
-    public UserFriend save(UserFriend userFriend) throws Exception {
+    public UserFriend save(UserFriend userFriend){
         return null;
     }
 
