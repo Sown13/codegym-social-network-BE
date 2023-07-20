@@ -30,4 +30,17 @@ public class UserRestController {
     public ResponseEntity<Optional<User>> findById(@PathVariable Long id) {
         return new ResponseEntity<>(this.userService.findById(id), HttpStatus.OK);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> toggleUserBlockStatus(@PathVariable Long id) {
+        Optional<User> optionalUser = userService.findById(id);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setBlock(!user.isBlock());
+            userService.save(user);
+            return ResponseEntity.ok("User ID: " + id + " - isBlock status changed to: " + user.isBlock());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

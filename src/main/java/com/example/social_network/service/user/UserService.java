@@ -15,7 +15,7 @@ public class UserService implements IUserService {
 
     @Override
     public Iterable<User> findAll() {
-        return null;
+        return userRepo.findAll();
     }
 
     @Override
@@ -25,12 +25,12 @@ public class UserService implements IUserService {
 
     @Override
     public User save(User user) {
-        return null;
+        return userRepo.save(user);
     }
 
     @Override
     public void remove(Long id) {
-
+        userRepo.deleteById(id);
     }
 
 
