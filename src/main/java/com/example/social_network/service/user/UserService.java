@@ -6,11 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
 @Service
-public class UserService implements IUserService{
+public class UserService implements IUserService {
 
     @Autowired
     UserRepo userRepo;
+
     @Override
     public Iterable<User> findAll() {
         return null;
@@ -32,9 +34,13 @@ public class UserService implements IUserService{
     }
 
 
-
     @Override
     public Optional<User> findByAccountName(String username) {
         return userRepo.findByAccountName(username);
+    }
+
+    @Override
+    public Iterable<User> findAllByAccountName(String name) {
+        return userRepo.findAllByAccountName(name);
     }
 }
