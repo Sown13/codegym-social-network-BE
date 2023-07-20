@@ -17,23 +17,32 @@ public class LoginSession {
     @Autowired
     UserService userService;
 
+
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) {
         Optional<User> storedUser = userService.findByAccountName(user.getAccountName());
 
-        if (storedUser.isPresent() && storedUser.get().getPassword().equals(user.getPassword())) {
-            HttpSession session = request.getSession();
-            session.setAttribute("userId", storedUser.get().getUserId());
-            session.setAttribute("accountName", storedUser.get().getAccountName());
-            session.setAttribute("role", storedUser.get().getRole());
-            session.setMaxInactiveInterval(3600);
-            return ResponseEntity.ok("Login successfully" + storedUser.get().getUserId() + storedUser.get().getAccountName() + storedUser.get().getRole()  );
+        if (storedUser.isPresent()) {
+            User foundUser = storedUser.get();
+            if (foundUser.isBlock()) {
+                return ResponseEntity.ok("Account is blocked. Please contact support for assistance.");
+            } else if (foundUser.getPassword().equals(user.getPassword())) {
+                HttpSession session = request.getSession();
+                session.setAttribute("userId", foundUser.getUserId());
+                session.setAttribute("accountName", foundUser.getAccountName());
+                session.setAttribute("role", foundUser.getRole());
+                session.setMaxInactiveInterval(3600);
+                return ResponseEntity.ok("Login successfully. User ID: " + foundUser.getUserId() + ", Account Name: " + foundUser.getAccountName() + ", Role: " + foundUser.getRole());
+            } else {
+                return ResponseEntity.ok("Invalid credentials. Login failed.");
+            }
         } else {
-            return ResponseEntity.ok("Login failed");
+            return ResponseEntity.ok("Account not found. Login failed.");
         }
     }
 
-        @GetMapping("/logout")
+
+    @GetMapping("/logout")
         public ResponseEntity<String> logout(HttpServletRequest request) {
             HttpSession session = request.getSession(false);
             if (session != null) {
