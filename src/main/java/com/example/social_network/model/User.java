@@ -27,6 +27,7 @@ public class User {
     private String role;
     private String address;
     private Date  createdDate;
+    private boolean isBlock=false;
 
 
 
