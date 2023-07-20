@@ -7,5 +7,7 @@ import java.util.Optional;
 
 public interface IUserService extends IGeneralService<User> {
 
-   Optional <User> findByAccountName(String username);
+    Optional<User> findByAccountName(String username);
+
+    Iterable<User> findAllByAccountName(String name);
 }
