@@ -60,4 +60,14 @@ public class USerService implements IUserService {
     public Iterable<User> findAllUsersByAccount(String account) {
         return userRepo.findUsersByAccountNameContaining(account);
     }
+
+    @Override
+    public Optional<User> findByAccountName(String username) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Iterable<User> findAllByAccountName(String name) {
+        return null;
+    }
 }
