@@ -8,10 +8,10 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class UserFriendServiceService implements IUserFriendService {
-    @Autowired
-    private UserFriendRepo userFriendRepo;
+public class UserFriendService implements IUserFriendService {
 
+    @Autowired
+    UserFriendRepo userFriendRepo;
 
     @Override
     public Iterable<UserFriend> findAll() {
@@ -20,22 +20,25 @@ public class UserFriendServiceService implements IUserFriendService {
 
     @Override
     public Optional<UserFriend> findById(Long id) {
-        return Optional.empty();
+        return userFriendRepo.findById(id);
     }
 
     @Override
-    public UserFriend save(UserFriend userFriend){
-        return null;
+    public UserFriend save(UserFriend userFriend) {
+        return userFriendRepo.save(userFriend);
     }
 
     @Override
     public void remove(Long id) {
-
+        userFriendRepo.deleteById(id);
     }
-
-
+    @Override
+    public Iterable<UserFriend> findAllFriendsByUserId(Long id) {
+        return userFriendRepo.findUserFriendsByUserId(id);
+    }
     @Override
     public Long countFriend(Long id) {
         return  userFriendRepo.countAllByUserFriend(id);
     }
+
 }

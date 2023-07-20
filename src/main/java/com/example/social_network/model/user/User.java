@@ -1,4 +1,4 @@
-package com.example.social_network.model;
+package com.example.social_network.model.user;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

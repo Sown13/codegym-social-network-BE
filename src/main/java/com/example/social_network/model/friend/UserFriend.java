@@ -1,6 +1,6 @@
 package com.example.social_network.model.friend;
 
-import com.example.social_network.model.User;
+import com.example.social_network.model.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

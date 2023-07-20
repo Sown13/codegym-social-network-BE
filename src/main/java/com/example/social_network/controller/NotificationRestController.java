@@ -25,11 +25,6 @@ public class NotificationRestController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-//    @DeleteMapping("{id}")
-//    public ResponseEntity<Void> deleteNotificationById(@PathVariable Long id) {
-//        this.notificationService.remove(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<Iterable<Notification>> findAllNotificationByUserId(@PathVariable Long id) {

@@ -1,6 +1,6 @@
 package com.example.social_network.controller.loginsession;
 
-import com.example.social_network.model.User;
+import com.example.social_network.model.user.User;
 import com.example.social_network.service.user.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -21,7 +21,6 @@ public class LoginSession {
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) {
         Optional<User> storedUser = userService.findByAccountName(user.getAccountName());
-
         if (storedUser.isPresent()) {
             User foundUser = storedUser.get();
             if (foundUser.isBlock()) {

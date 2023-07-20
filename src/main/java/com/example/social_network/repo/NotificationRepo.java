@@ -1,12 +1,9 @@
 package com.example.social_network.repo;
 
-import com.example.social_network.model.User;
 import com.example.social_network.model.notification.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface NotificationRepo extends JpaRepository<Notification, Long> {

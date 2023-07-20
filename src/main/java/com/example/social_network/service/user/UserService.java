@@ -1,6 +1,6 @@
 package com.example.social_network.service.user;
 
-import com.example.social_network.model.User;
+import com.example.social_network.model.user.User;
 import com.example.social_network.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class UserService implements IUserService {
 
     @Override
     public User save(User user) throws Exception {
-        if (userRepo.findUsersByAccountName(user.getAccountName()).isPresent()) {
+        if (userRepo.findUserByAccountName(user.getAccountName()).isPresent()) {
             throw new Exception("Username already exists");
         }
 
@@ -40,7 +40,7 @@ public class UserService implements IUserService {
     }
 
     public User getUserByUsername(String username) throws Exception {
-        Optional<User> optionalUser = userRepo.findUsersByAccountName(username);
+        Optional<User> optionalUser = userRepo.findUserByAccountName(username);
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         } else {
@@ -59,13 +59,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<User> findByAccountName(String username) {
-        return userRepo.findByAccountName(username);
+    public Optional<User> findByAccountName(String accountName) {
+        return userRepo.findUserByAccountName(accountName);
     }
 
-    @Override
-    public Iterable<User> findAllByAccountName(String name) {
-        return userRepo.findAllByAccountName(name);
-    }
+//    @Override
+//    public Iterable<User> findAllByAccountName(String name) {
+//        return userRepo.findUserByAccountName(name);
+//    }
 
 }
