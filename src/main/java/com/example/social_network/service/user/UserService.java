@@ -60,12 +60,12 @@ public class UserService implements IUserService {
 
     @Override
     public Optional<User> findByAccountName(String username) {
-        return Optional.empty();
+        return userRepo.findByAccountName(username);
     }
 
     @Override
     public Iterable<User> findAllByAccountName(String name) {
-        return null;
+        return userRepo.findAllByAccountName(name);
     }
 
 }
