@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("user-friends")
+@RequestMapping("users-friends")
 public class UserFriendsResController {
     @Autowired
     private IUserFriendsService userFriendsService;
