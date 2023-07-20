@@ -55,4 +55,19 @@ public class UserRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/find-by-account-name")
+    public ResponseEntity<Iterable<User>> findAllByUserAccountName(@RequestParam String accountName) {
+        if (accountName == null) {
+            return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
+        } else {
+            Iterable<User> users = userService.findAllByAccountName(accountName);
+            return ResponseEntity.ok(users);
+        }
+    }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<Optional<User>> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(this.userService.findById(id), HttpStatus.OK);
+    }
 }
