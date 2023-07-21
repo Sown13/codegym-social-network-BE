@@ -59,8 +59,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public boolean checkPassword(String password) {
-        return userRepo.findUsersByPassword(password);
+    public boolean checkPassword(User user, String password) {
+      return  user.getPassword().equals(password);
     }
 
 

@@ -15,7 +15,6 @@ public interface UserRepo extends JpaRepository<User, Long> {
     Optional<User> findUsersByEmail(String email);
 
     Iterable<User> findUsersByAccountNameContaining(String account);
-    boolean findUsersByPassword(String password);
 
 //    @Query(value = "select u from User as u where u.accountName like %:name%")
 //    Iterable<User> findAllByAccountName(String name);
