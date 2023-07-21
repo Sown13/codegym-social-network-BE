@@ -9,7 +9,7 @@ public interface IUserService extends IGeneralService<User> {
     Iterable<User> findAllUsersByAccount(String account);
 
     Optional<User> findByAccountName(String username);
-
+     boolean checkPassword(String password);
     User update( User user);
 
 //    Iterable<User> findAllByAccountName(String name);

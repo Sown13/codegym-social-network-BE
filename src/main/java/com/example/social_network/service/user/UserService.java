@@ -58,6 +58,10 @@ public class UserService implements IUserService {
         return userRepo.findUserByAccountName(accountName);
     }
 
+    @Override
+    public boolean checkPassword(String password) {
+        return userRepo.findUsersByPassword(password);
+    }
 
 
     @Override

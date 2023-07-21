@@ -52,6 +52,22 @@ public class UserRestController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @PostMapping("/update-password/{id}")
+    private ResponseEntity<?>updatePassword(@PathVariable ("id") Long id,@RequestParam("password") String password,@RequestParam("new-password") String newPassword,
+    @RequestParam ("check-new-password") String checkNewPassword){
+        Optional<User>optionalUser=userService.findById(id);
+        if(optionalUser.isPresent()){
+            if(!userService.checkPassword(password)){
+                if(newPassword.equals(checkNewPassword)){
+                    optionalUser.get().setPassword(checkNewPassword);
+                    userService.update(optionalUser.get());
+                    return new ResponseEntity<>(optionalUser.get(),HttpStatus.OK);
+                }
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 
 
     @PutMapping("/{id}")
