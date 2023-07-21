@@ -11,8 +11,6 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepo userRepo;
-//    @Autowired
-//    IUserFriendService userFriendService;
 
     @Override
     public Iterable<User> findAll() {
