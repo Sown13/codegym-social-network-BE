@@ -72,6 +72,17 @@ public class UserRestController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @PostMapping("/update-is-block/{id}")
+    private ResponseEntity<?>isBlockUser(@PathVariable("id")Long id){
+        Optional<User> userOptional = userService.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setBlock(!user.isBlock());
+            userService.update(user);
+            return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 
     @PutMapping("/{id}")
@@ -91,7 +102,6 @@ public class UserRestController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
 }
 
