@@ -10,5 +10,7 @@ public interface IUserService extends IGeneralService<User> {
 
     Optional<User> findByAccountName(String username);
 
+    User update( User user);
+
 //    Iterable<User> findAllByAccountName(String name);
 }

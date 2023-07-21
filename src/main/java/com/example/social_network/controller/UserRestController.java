@@ -20,23 +20,26 @@ public class UserRestController {
     private IUserService userService;
 
     @GetMapping()
-    private ResponseEntity<Iterable<User>>findAllUsers(){
-        Iterable<User>listUser=userService.findAll();
+    private ResponseEntity<Iterable<User>> findAllUsers() {
+        Iterable<User> listUser = userService.findAll();
         return new ResponseEntity<>(listUser, HttpStatus.OK);
     }
+
     @GetMapping("/{id}")
-    private ResponseEntity<Optional<User>>findUserByid(@PathVariable ("id")Long id){
-        Optional<User>user=userService.findById(id);
-        if(user.isPresent()){
-            return new ResponseEntity<>(user,HttpStatus.OK);
+    private ResponseEntity<Optional<User>> findUserByid(@PathVariable("id") Long id) {
+        Optional<User> user = userService.findById(id);
+        if (user.isPresent()) {
+            return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
     @GetMapping("/name")
-    private ResponseEntity<Iterable<User>>findUsersByAccountNameContaining(@RequestParam("name") String name){
-        Iterable<User>listUser= userService.findAllUsersByAccount(name);
+    private ResponseEntity<Iterable<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
+        Iterable<User> listUser = userService.findAllUsersByAccount(name);
         return ResponseEntity.ok(listUser);
     }
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
         if (result.hasErrors()) {
@@ -50,4 +53,25 @@ public class UserRestController {
         }
     }
 
+
+    @PutMapping("/{id}")
+    private ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody User user, BindingResult result) {
+        Optional<User> userOptional = userService.findById(id);
+        if (userOptional.isPresent()) {
+            user.setUserId(id);
+            if (result.hasErrors()) {
+                return ResponseEntity.badRequest().body(user);
+            }
+            try {
+                userService.update(user);
+                return new ResponseEntity<>(user, HttpStatus.OK);
+            } catch (Exception e) {
+                return ResponseEntity.badRequest().body(e.getMessage());
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+
 }
+

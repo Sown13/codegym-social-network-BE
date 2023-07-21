@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
 @Entity
@@ -20,14 +19,14 @@ public class User {
     @Id
     private Long userId;
     @Column(unique = true)
-//    @NotBlank(message = "Username is required")
+    @NotBlank(message = "Username is required")
     private String accountName;
-//    @NotBlank(message = "Password is required")
-//    @Size(min = 6, max = 32, message = "Password must be between 6 and 32 characters")
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 32, message = "Password must be between 6 and 32 characters")
     private String password;
     @Column(unique = true)
-//    @NotBlank(message = "Email is required")
-//    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
     private String email;
     private String fullName;
     private String phone;

@@ -11,17 +11,14 @@ public class UserService implements IUserService {
 
     @Autowired
     private UserRepo userRepo;
-
     @Override
     public Iterable<User> findAll() {
         return userRepo.findAll();
     }
-
     @Override
     public Optional<User> findById(Long id) {
       return userRepo.findById(id);
     }
-
 
 
     @Override
@@ -59,6 +56,13 @@ public class UserService implements IUserService {
     @Override
     public Optional<User> findByAccountName(String accountName) {
         return userRepo.findUserByAccountName(accountName);
+    }
+
+
+
+    @Override
+    public User update(User user) {
+        return userRepo.save(user);
     }
 
 //    @Override
