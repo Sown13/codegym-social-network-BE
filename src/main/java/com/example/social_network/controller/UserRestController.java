@@ -41,7 +41,7 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/name")
+    @GetMapping("/search")
     private ResponseEntity<Iterable<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
         Iterable<User> listUser = userService.findAllUsersByAccount(name);
         return ResponseEntity.ok(listUser);
