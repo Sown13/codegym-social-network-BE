@@ -1,5 +1,8 @@
 package com.example.social_network.controller;
 
+import com.example.social_network.model.friend.dto.HaveBeenFriendsDTO;
+import com.example.social_network.model.friend.dto.SourceUserFriendDTO;
+import com.example.social_network.model.friend.dto.TargetUserFriendDTO;
 import com.example.social_network.model.friend.UserFriend;
 import com.example.social_network.service.friend.UserFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +14,6 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Optional;
-
 
 
 @RestController
@@ -28,10 +30,10 @@ public class UserFriendRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<UserFriend>> findById(@PathVariable Long id){
+    public ResponseEntity<Optional<UserFriend>> findById(@PathVariable Long id) {
         Optional<UserFriend> userFriendOptional = userFriendService.findById(id);
-        if (userFriendOptional.isPresent()){
-            return new ResponseEntity<>(userFriendOptional , HttpStatus.OK);
+        if (userFriendOptional.isPresent()) {
+            return new ResponseEntity<>(userFriendOptional, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
@@ -49,6 +51,7 @@ public class UserFriendRestController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<Optional<UserFriend>> acceptFriendRequest(@PathVariable("id") Long id) {
         Optional<UserFriend> userFriendOptional = userFriendService.findById(id);
@@ -64,11 +67,41 @@ public class UserFriendRestController {
         return ResponseEntity.ok(userFriendOptional);
     }
 
+    // delete khỏi danh sách , userFriend
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFriend(@PathVariable("id") Long id) {
         userFriendService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    // Lời mời s-u and false , source gửi lời mời đến target
+        @GetMapping("/{id}/friend-request-sent")
+    public ResponseEntity<Iterable<SourceUserFriendDTO>> sourceSendFriend(@PathVariable Long id) {
+        Iterable<SourceUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByUserFriendId(id);
+        return new ResponseEntity<>(userFriendIterable,HttpStatus.OK);
+    }
+
+    // t-u and false , nhận  lời mời gửi đến từ s-u
+    @GetMapping("/{id}/friend-request-receive")
+    public ResponseEntity<Iterable<TargetUserFriendDTO>> targetSendFriend(@PathVariable Long id) {
+        Iterable<TargetUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByTargetUser(id);
+        return new ResponseEntity<>(userFriendIterable,HttpStatus.OK);
+    }
+
+
+    // Query s-u || f-u and true ,  đều là bạn bè với nhau
+    @GetMapping("/have-been-friend/{sourceId}/{targetId}")
+    public ResponseEntity<Iterable<HaveBeenFriendsDTO>> getHaveBeenFriends(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+        Iterable<HaveBeenFriendsDTO> haveBeenFriends = userFriendService.findUserFriendByTargetUserOrSourceUser(targetId, sourceId);
+        return ResponseEntity.ok(haveBeenFriends);
+
+    }
+
+
+
+
+
 
 }
 
