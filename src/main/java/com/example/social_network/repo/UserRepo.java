@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -14,7 +15,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     Optional<User> findUsersByEmail(String email);
 
-    Iterable<User> findUsersByAccountNameContaining(String account);
+    List<User> findUsersByAccountNameContaining(String account);
 
 //    @Query(value = "select u from User as u where u.accountName like %:name%")
 //    Iterable<User> findAllByAccountName(String name);

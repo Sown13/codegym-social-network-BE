@@ -4,6 +4,8 @@ import com.example.social_network.model.user.User;
 import com.example.social_network.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -49,7 +51,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Iterable<User> findAllUsersByAccount(String account) {
+    public List<User> findAllUsersByAccount(String account) {
         return userRepo.findUsersByAccountNameContaining(account);
     }
 

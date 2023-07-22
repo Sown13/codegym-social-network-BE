@@ -42,9 +42,12 @@ public class UserRestController {
     }
 
     @GetMapping("/search")
-    private ResponseEntity<Iterable<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
-        Iterable<User> listUser = userService.findAllUsersByAccount(name);
-        return ResponseEntity.ok(listUser);
+    private ResponseEntity<List<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
+        List<User> listUser = userService.findAllUsersByAccount(name);
+         if(!listUser.isEmpty()){
+          return new ResponseEntity<>(listUser,HttpStatus.OK);
+         }
+         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 @PostMapping("/register")
