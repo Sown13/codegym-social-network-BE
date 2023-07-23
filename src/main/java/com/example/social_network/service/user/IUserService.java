@@ -1,6 +1,7 @@
 package com.example.social_network.service.user;
 
 import com.example.social_network.model.user.User;
+import com.example.social_network.model.user.dto.UserId;
 import com.example.social_network.service.IGeneralService;
 
 import java.util.List;

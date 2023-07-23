@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 @Entity
@@ -31,11 +33,29 @@ public class User {
     private String fullName;
     private String phone;
     private Date birthday;
-    private String avatar;
+    @Transient // tạm thời không lưu trữ trường này vào database
+    private MultipartFile avatarFile; //  thêm trường MultipartFile cho avatar
+
+    private String avatar="img/example-ava.jpg";
     private String hobby;
-    private String role= "user";
+    private String role= "USER";
     private String address;
     private Date createdDate;
     private boolean isBlock=false;
+    private String background;
+    public User(String accountName, String password, String email, String fullName, String phone,
+                Date birthday, MultipartFile avatarFile, String hobby, String address,String background) {
+        this.accountName = accountName;
+        this.password = password;
+        this.email = email;
+        this.fullName = fullName;
+        this.phone = phone;
+        this.birthday = birthday;
+        this.avatarFile = avatarFile;
+        this.hobby = hobby;
+        this.address = address;
+        this.createdDate = new Date();
+        this.background=background;
+    }
 
 }
