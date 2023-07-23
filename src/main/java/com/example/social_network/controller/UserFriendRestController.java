@@ -77,14 +77,14 @@ public class UserFriendRestController {
 
 
     // Lời mời s-u and false , source gửi lời mời đến target
-        @GetMapping("/{id}/friend-request-sent")
+        @GetMapping("/user/{id}/friend-request-sent")
     public ResponseEntity<Iterable<SourceUserFriendDTO>> sourceSendFriend(@PathVariable Long id) {
         Iterable<SourceUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByUserFriendId(id);
         return new ResponseEntity<>(userFriendIterable,HttpStatus.OK);
     }
 
     // t-u and false , nhận  lời mời gửi đến từ s-u
-    @GetMapping("/{id}/friend-request-receive")
+    @GetMapping("/user/{id}/friend-request-receive")
     public ResponseEntity<Iterable<TargetUserFriendDTO>> targetSendFriend(@PathVariable Long id) {
         Iterable<TargetUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByTargetUser(id);
         return new ResponseEntity<>(userFriendIterable,HttpStatus.OK);
