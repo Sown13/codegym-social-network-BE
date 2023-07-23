@@ -6,12 +6,13 @@ import com.example.social_network.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,6 +59,29 @@ public class UserService implements IUserService {
         } else {
             throw new Exception("User not found");
         }
+    }
+    @Override
+    public UserId getUserByIdExceptPassword(Long userId) {
+        Optional<User> userOptional = userRepo.findById(userId);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            // ^ tạo đối tượng UserId với trường userId được lấy từ đối tượng User
+
+
+            // đặt các trường password và isBlock thành null
+            return new UserId(user);
+        }
+        return null;
+    }
+
+    @Override
+    public List<UserId> getAllUsersExceptPasswordAndBlock() {
+        List<User>users=userRepo.findAll();
+        List<UserId>userIdsList=new ArrayList<>();
+        for (User user :users) {
+            userIdsList.add(new UserId(user));
+        }
+        return userIdsList;
     }
 
     @Override

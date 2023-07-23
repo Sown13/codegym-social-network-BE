@@ -14,5 +14,8 @@ public interface IUserService extends IGeneralService<User> {
      boolean checkPassword(User user, String password);
     User update( User user);
 
+    UserId getUserByIdExceptPassword(Long userId);
+    List<UserId>getAllUsersExceptPasswordAndBlock();
+
 
 }

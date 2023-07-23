@@ -41,6 +41,7 @@ public class User {
     private String role= "USER";
     private String address;
     private Date createdDate;
+    private String background;
     private boolean isBlock=false;
     private String background;
     public User(String accountName, String password, String email, String fullName, String phone,

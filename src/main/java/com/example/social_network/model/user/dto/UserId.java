@@ -1,11 +1,8 @@
 package com.example.social_network.model.user.dto;
-
 import com.example.social_network.model.user.User;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.util.Date;
 
 @NoArgsConstructor
@@ -41,3 +38,4 @@ public class UserId {
         this.background = user.getBackground();
     }
 }
+
