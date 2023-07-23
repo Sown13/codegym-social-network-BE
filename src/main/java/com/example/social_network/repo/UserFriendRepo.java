@@ -13,6 +13,8 @@ import java.util.List;
 
 @Repository
 public interface UserFriendRepo extends JpaRepository<UserFriend, Long> {
+
+
     @Query("SELECT COUNT(*) FROM UserFriend u WHERE u.isAccepted = true AND u.targetUser = :userId")
     Long countAllByUserFriend(@Param("userId") Long userId);
 
@@ -38,6 +40,16 @@ public interface UserFriendRepo extends JpaRepository<UserFriend, Long> {
     List<Object[]> findUserFriendByTargetUserOrSourceUser(@Param("targetId") Long targetId, @Param("sourceId") Long sourceId);
 
 
+    @Query(value = "SELECT uf.source_user_user_id, uf.target_user_user_id, u.account_name, uf.is_accepted" +
+            "        FROM user_friend uf" +
+            "        JOIN users u ON u.user_id = uf.target_user_user_id" +
+            "        WHERE uf.is_accepted = true AND uf.target_user_user_id = :targetUserId ", nativeQuery = true)
+    List<Object[]> findAcceptedUserFriendsByTargetUserId(Long targetUserId);
 
+    @Query(value = "SELECT COUNT(*) " +
+            "FROM user_friend uf " +
+            "JOIN users u ON u.user_id = uf.target_user_user_id " +
+            "WHERE uf.is_accepted = true AND uf.target_user_user_id = :userId", nativeQuery = true)
+    Long countAcceptedFriendsByUserId(@Param("userId") Long userId);
 
 }
