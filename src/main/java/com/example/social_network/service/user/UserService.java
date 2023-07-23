@@ -4,6 +4,7 @@ import com.example.social_network.model.user.User;
 import com.example.social_network.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.Optional;
 
 @Service
@@ -21,9 +22,8 @@ public class UserService implements IUserService {
 
     @Override
     public Optional<User> findById(Long id) {
-      return userRepo.findById(id);
+        return userRepo.findById(id);
     }
-
 
 
     @Override
@@ -68,4 +68,14 @@ public class UserService implements IUserService {
 //        return userRepo.findUserByAccountName(name);
 //    }
 
+
+    @Override
+    public Iterable<User> SortUserByDayCreate() {
+        return userRepo.SortUserByDayCreate();
+    }
+
+    @Override
+    public Iterable<User> SortUserByAccountName() {
+        return userRepo.SortUserByAccountName();
+    }
 }

@@ -11,4 +11,9 @@ public interface IUserService extends IGeneralService<User> {
     Optional<User> findByAccountName(String username);
 
 //    Iterable<User> findAllByAccountName(String name);
+
+    Iterable<User> SortUserByDayCreate();
+
+    Iterable<User> SortUserByAccountName();
+
 }
