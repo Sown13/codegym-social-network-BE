@@ -13,5 +13,7 @@ public interface IUserService extends IGeneralService<User> {
      boolean checkPassword(User user, String password);
     User update( User user);
 
+//    List<User> findAllFriendsByUserId(Long userId);
+
 
 }

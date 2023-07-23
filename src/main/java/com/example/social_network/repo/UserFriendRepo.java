@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @PersistenceContext
 
@@ -16,8 +17,8 @@ public interface UserFriendRepo extends JpaRepository<UserFriend, Long> {
     @Query("SELECT COUNT(*) FROM UserFriend u WHERE u.isAccepted = true AND u.targetUser = :userId")
     Long countAllByUserFriend(@Param("userId") Long userId);
 
-    @Query("SELECT uf.targetUser FROM UserFriend uf WHERE uf.sourceUser.userId = :id and uf.isAccepted = true")
-    Iterable<UserFriend> findUserFriendsByUserId(Long id);
+    @Query("SELECT uf FROM UserFriend uf WHERE uf.sourceUser.userId = :id or uf.targetUser.userId = :id and uf.isAccepted = true")
+    Iterable<UserFriend> findUserFriendsAcceptedByUserId(Long id);
 
     @Query(value = "SELECT user_friend.source_user_user_id, user_friend.target_user_user_id, users.account_name, user_friend.is_accepted " +
             "FROM user_friend " +
@@ -32,12 +33,7 @@ public interface UserFriendRepo extends JpaRepository<UserFriend, Long> {
     List<Object[]> findUserFriendByTargetUser(Long id);
 
 
-    @Query(value = "select user_friend.source_user_user_id , user_friend.target_user_user_id , users.account_name , user_friend.is_accepted from user_friend\n" +
-            "join users on users.user_id = user_friend.source_user_user_id\n" +
-            "where (user_friend.target_user_user_id = :targetId or user_friend.source_user_user_id = :sourceId) and user_friend.is_accepted = true", nativeQuery = true)
-    List<Object[]> findUserFriendByTargetUserOrSourceUser(@Param("targetId") Long targetId, @Param("sourceId") Long sourceId);
-
-
-
+    @Query(value = "select is_accepted, friend_type from user_friend where (source_user_user_id = :sourceId and target_user_user_id = :targetId) or (source_user_user_id= :targetId and target_user_user_id = :sourceId)", nativeQuery = true)
+    Optional<Object> findRelationShip(@Param("targetId") Long targetId, @Param("sourceId") Long sourceId);
 
 }
