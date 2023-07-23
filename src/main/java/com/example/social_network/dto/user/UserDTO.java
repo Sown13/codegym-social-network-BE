@@ -1,4 +1,4 @@
-package com.example.social_network.model.user.dto;
+package com.example.social_network.dto.user;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

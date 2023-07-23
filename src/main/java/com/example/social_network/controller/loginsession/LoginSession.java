@@ -1,7 +1,7 @@
 package com.example.social_network.controller.loginsession;
 
 import com.example.social_network.model.user.User;
-import com.example.social_network.model.user.dto.UserLoginDTO;
+import com.example.social_network.dto.user.UserLoginDTO;
 import com.example.social_network.service.user.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -34,6 +34,7 @@ public class LoginSession {
                 session.setAttribute("userId", foundUser.getUserId());
                 session.setAttribute("accountName", foundUser.getAccountName());
                 session.setAttribute("role", foundUser.getRole());
+                session.setAttribute("fullName",foundUser.getFullName());
                 session.setMaxInactiveInterval(3600);
 
                 UserLoginDTO loginResponse = new UserLoginDTO();
@@ -41,7 +42,7 @@ public class LoginSession {
                 loginResponse.setUserId(foundUser.getUserId());
                 loginResponse.setAccountName(foundUser.getAccountName());
                 loginResponse.setRole(foundUser.getRole());
-
+                loginResponse.setFullName(foundUser.getFullName());
                 return ResponseEntity.ok(loginResponse);
             } else {
                 UserLoginDTO loginResponse = new UserLoginDTO();

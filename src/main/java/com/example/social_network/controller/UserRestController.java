@@ -1,7 +1,7 @@
 package com.example.social_network.controller;
 
 import com.example.social_network.model.user.User;
-import com.example.social_network.model.user.dto.UserDTO;
+import com.example.social_network.dto.user.UserDTO;
 import com.example.social_network.service.user.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
