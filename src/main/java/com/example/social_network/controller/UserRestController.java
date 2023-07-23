@@ -2,7 +2,6 @@ package com.example.social_network.controller;
 
 import com.example.social_network.model.user.User;
 import com.example.social_network.model.user.dto.UserDTO;
-import com.example.social_network.model.user.dto.UserId;
 import com.example.social_network.service.user.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -32,21 +31,6 @@ import java.util.stream.Collectors;
 public class UserRestController {
     @Autowired
     private IUserService userService;
-
-    @GetMapping()
-    private ResponseEntity<List<UserId>> findAllUsers() {
-        List<UserId > listUser = userService.getAllUsersExceptPasswordAndBlock();
-        return new ResponseEntity<>(listUser, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    private ResponseEntity<UserId> findAUserById(@PathVariable("id") Long id) {
-        UserId user = userService.getUserByIdExceptPassword(id);
-        if (user!=null) {
-            return new ResponseEntity<>(user, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
 
     @GetMapping("/search")
     private ResponseEntity<List<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
