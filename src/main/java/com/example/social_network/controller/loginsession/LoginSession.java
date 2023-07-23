@@ -34,6 +34,8 @@ public class LoginSession {
                 session.setAttribute("userId", foundUser.getUserId());
                 session.setAttribute("accountName", foundUser.getAccountName());
                 session.setAttribute("role", foundUser.getRole());
+                session.setAttribute("fullName" ,foundUser.getFullName());
+                session.setAttribute("avatar" , foundUser.getAvatar());
                 session.setMaxInactiveInterval(3600);
 
                 UserLoginDTO loginResponse = new UserLoginDTO();
@@ -41,6 +43,8 @@ public class LoginSession {
                 loginResponse.setUserId(foundUser.getUserId());
                 loginResponse.setAccountName(foundUser.getAccountName());
                 loginResponse.setRole(foundUser.getRole());
+                loginResponse.setFullName(foundUser.getFullName());
+                loginResponse.setAvatar(foundUser.getAvatar());
 
                 return ResponseEntity.ok(loginResponse);
             } else {
