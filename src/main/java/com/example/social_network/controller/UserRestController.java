@@ -2,6 +2,7 @@ package com.example.social_network.controller;
 
 import com.example.social_network.model.user.User;
 import com.example.social_network.model.user.dto.UserDTO;
+import com.example.social_network.model.user.dto.UserId;
 import com.example.social_network.service.user.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,15 @@ public class UserRestController {
     private IUserService userService;
 
     @GetMapping()
-    private ResponseEntity<Iterable<User>> findAllUsers() {
-        Iterable<User> listUser = userService.findAll();
+    private ResponseEntity<List<UserId>> findAllUsers() {
+        List<UserId> listUser = userService.getAllUsersExceptPasswordAndBlock();
         return new ResponseEntity<>(listUser, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Optional<User>> findAUserById(@PathVariable("id") Long id) {
-        Optional<User> user = userService.findById(id);
-        if (user.isPresent()) {
+    private ResponseEntity<UserId> findAUserById(@PathVariable("id") Long id) {
+        UserId user = userService.getUserByIdExceptPassword(id);
+        if (user!=null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
