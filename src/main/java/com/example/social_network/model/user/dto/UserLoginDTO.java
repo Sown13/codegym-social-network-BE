@@ -12,6 +12,6 @@ public class UserLoginDTO {
     private Long userId;
     private String accountName;
     private String role;
-
+    private String fullName;
     private String avatar;
 }
