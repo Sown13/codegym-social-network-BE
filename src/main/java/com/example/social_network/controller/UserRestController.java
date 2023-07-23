@@ -33,7 +33,7 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Optional<User>> findUserByid(@PathVariable("id") Long id) {
+    private ResponseEntity<Optional<User>> findAUserById(@PathVariable("id") Long id) {
         Optional<User> user = userService.findById(id);
         if (user.isPresent()) {
             return new ResponseEntity<>(user, HttpStatus.OK);
@@ -47,7 +47,7 @@ public class UserRestController {
          if(!listUser.isEmpty()){
           return new ResponseEntity<>(listUser,HttpStatus.OK);
          }
-         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+         return new ResponseEntity<>(HttpStatus.OK);
     }
 
 @PostMapping("/register")
@@ -70,7 +70,7 @@ public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResu
 }
 
     @PostMapping("/update/{id}")
-    private ResponseEntity<?> testUpdatePassword(@Valid @PathVariable("id") Long id, @RequestBody @Validated UserDTO userDTO, BindingResult bindingResult) {
+    private ResponseEntity<?> updatePassword(@Valid @PathVariable("id") Long id, @RequestBody @Validated UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
