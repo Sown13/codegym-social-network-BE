@@ -72,6 +72,7 @@ public class UserRestController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    //Phương thức này test không có vấn đề
     @PostMapping("/update-is-block/{id}")
     private ResponseEntity<?>isBlockUser(@PathVariable("id")Long id){
         Optional<User> userOptional = userService.findById(id);
