@@ -1,10 +1,12 @@
 package com.example.social_network.controller.loginsession;
 
 import com.example.social_network.model.user.User;
+import com.example.social_network.model.user.dto.UserLoginDTO;
 import com.example.social_network.service.user.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,24 +21,41 @@ public class LoginSession {
 
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody User user, HttpServletRequest request) {
+    public ResponseEntity<UserLoginDTO> login(@RequestBody User user, HttpServletRequest request) {
         Optional<User> storedUser = userService.findByAccountName(user.getAccountName());
         if (storedUser.isPresent()) {
             User foundUser = storedUser.get();
             if (foundUser.isBlock()) {
-                return ResponseEntity.ok("Account is blocked. Please contact support for assistance.");
+                UserLoginDTO loginResponse = new UserLoginDTO();
+                loginResponse.setMessage("Account is blocked. Please contact support for assistance.");
+                return new ResponseEntity<>(loginResponse, HttpStatus.UNAUTHORIZED);
             } else if (foundUser.getPassword().equals(user.getPassword())) {
                 HttpSession session = request.getSession();
                 session.setAttribute("userId", foundUser.getUserId());
                 session.setAttribute("accountName", foundUser.getAccountName());
                 session.setAttribute("role", foundUser.getRole());
+                session.setAttribute("fullName" ,foundUser.getFullName());
+                session.setAttribute("avatar" , foundUser.getAvatar());
                 session.setMaxInactiveInterval(3600);
-                return ResponseEntity.ok("Login successfully. User ID: " + foundUser.getUserId() + ", Account Name: " + foundUser.getAccountName() + ", Role: " + foundUser.getRole());
+
+                UserLoginDTO loginResponse = new UserLoginDTO();
+                loginResponse.setMessage("Login successfully.");
+                loginResponse.setUserId(foundUser.getUserId());
+                loginResponse.setAccountName(foundUser.getAccountName());
+                loginResponse.setRole(foundUser.getRole());
+                loginResponse.setFullName(foundUser.getFullName());
+                loginResponse.setAvatar(foundUser.getAvatar());
+
+                return ResponseEntity.ok(loginResponse);
             } else {
-                return ResponseEntity.ok("Invalid credentials. Login failed.");
+                UserLoginDTO loginResponse = new UserLoginDTO();
+                loginResponse.setMessage("Invalid credentials. Login failed.");
+                return new ResponseEntity<>(loginResponse, HttpStatus.UNAUTHORIZED);
             }
         } else {
-            return ResponseEntity.ok("Account not found. Login failed.");
+            UserLoginDTO loginResponse = new UserLoginDTO();
+            loginResponse.setMessage("Account not found. Login failed.");
+            return new ResponseEntity<>(loginResponse, HttpStatus.NOT_FOUND);
         }
     }
 

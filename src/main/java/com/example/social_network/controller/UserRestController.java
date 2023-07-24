@@ -1,7 +1,8 @@
 package com.example.social_network.controller;
 
 import com.example.social_network.model.user.User;
-import com.example.social_network.model.user.UserDTO;
+import com.example.social_network.model.user.dto.UserDTO;
+import com.example.social_network.model.user.dto.UserId;
 import com.example.social_network.service.user.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -22,42 +28,50 @@ public class UserRestController {
     private IUserService userService;
 
     @GetMapping()
-    private ResponseEntity<Iterable<User>> findAllUsers() {
-        Iterable<User> listUser = userService.findAll();
+    private ResponseEntity<List<UserId>> findAllUsers() {
+        List<UserId> listUser = userService.getAllUsersExceptPasswordAndBlock();
         return new ResponseEntity<>(listUser, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    private ResponseEntity<Optional<User>> findUserByid(@PathVariable("id") Long id) {
-        Optional<User> user = userService.findById(id);
-        if (user.isPresent()) {
+    private ResponseEntity<UserId> findAUserById(@PathVariable("id") Long id) {
+        UserId user = userService.getUserByIdExceptPassword(id);
+        if (user!=null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/name")
-    private ResponseEntity<Iterable<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
-        Iterable<User> listUser = userService.findAllUsersByAccount(name);
-        return ResponseEntity.ok(listUser);
+    @GetMapping("/search")
+    private ResponseEntity<List<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
+        List<User> listUser = userService.findAllUsersByAccount(name);
+         if(!listUser.isEmpty()){
+          return new ResponseEntity<>(listUser,HttpStatus.OK);
+         }
+         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult result) {
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body(result.getAllErrors());
-        }
-        try {
-            userService.save(user);
-            return ResponseEntity.ok("User registered successfully");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+@PostMapping("/register")
+public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+        List<String> errors = bindingResult.getFieldErrors()
+                .stream()
+                .map(error -> error.getDefaultMessage())
+                .collect(Collectors.toList());
+        return ResponseEntity.badRequest().body(errors);
     }
-
+    try {
+        Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+        user.setCreatedDate(now);
+        userService.save(user);
+        return ResponseEntity.ok("User registered successfully");
+    } catch (Exception e) {
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+}
 
     @PostMapping("/update/{id}")
-    private ResponseEntity<?> testUpdatePassword(@Valid @PathVariable("id") Long id, @RequestBody @Validated UserDTO userDTO, BindingResult bindingResult) {
+    private ResponseEntity<?> updatePassword(@Valid @PathVariable("id") Long id, @RequestBody @Validated UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
         }
