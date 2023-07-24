@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -75,7 +79,7 @@ public class UserRestController {
 //    }
 //}
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @ModelAttribute User user, BindingResult bindingResult, HttpServletRequest request) {
+    public ResponseEntity<?> addUser(@Valid @RequestBody User user, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors()
                     .stream()
@@ -86,22 +90,27 @@ public class UserRestController {
         try {
             Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
             user.setCreatedDate(now);
-            MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
-            MultipartFile file = multipartRequest.getFile("avatarFile");
-            if (file != null) {
 
-                File dest = new File("/path/to/avatar/directory", Objects.requireNonNull(file.getOriginalFilename()));
+            MultipartFile file = user.getAvatarFile();
+            if (file != null) {
+                String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+                Path path = Paths.get("d:/img");
+                if (!Files.exists(path)) {
+                    Files.createDirectories(path);
+                }
+
+                File dest = new File(path.toString(), fileName);
                 file.transferTo(dest);
                 user.setAvatar(dest.getPath());
             }
+
             userService.save(user);
-            return ResponseEntity.ok("User registered successfully");
+
+            return ResponseEntity.ok("User added successfully");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
-
 
     @PostMapping("/update/{id}")
     private ResponseEntity<?> updatePassword(@Valid @PathVariable("id") Long id, @RequestBody @Validated UserDTO userDTO, BindingResult bindingResult) {

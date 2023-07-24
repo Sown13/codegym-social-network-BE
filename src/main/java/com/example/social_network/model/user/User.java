@@ -43,7 +43,6 @@ public class User {
     private Date createdDate;
     private String background;
     private boolean isBlock=false;
-    private String background;
     public User(String accountName, String password, String email, String fullName, String phone,
                 Date birthday, MultipartFile avatarFile, String hobby, String address,String background) {
         this.accountName = accountName;

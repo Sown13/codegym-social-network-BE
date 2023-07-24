@@ -41,11 +41,9 @@ public class UserService implements IUserService {
             throw new Exception("Email already exists");
         }
         if (user.getAvatarFile() != null) {
-            // Lưu trữ tệp tin ảnh vào thư mục cụ thể trên máy chủ
             String fileName = new Date().getTime() + "-" + user.getAvatarFile().getOriginalFilename();
             Path path = Paths.get(avatarDirectory + fileName);
             Files.write(path, user.getAvatarFile().getBytes());
-            // Cập nhật đường dẫn của tệp tin vào thuộc tính avatar của đối tượng User
             user.setAvatar(fileName);
         }
 
@@ -65,10 +63,6 @@ public class UserService implements IUserService {
         Optional<User> userOptional = userRepo.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
-            // ^ tạo đối tượng UserId với trường userId được lấy từ đối tượng User
-
-
-            // đặt các trường password và isBlock thành null
             return new UserId(user);
         }
         return null;
