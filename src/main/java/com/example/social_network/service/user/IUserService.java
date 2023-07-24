@@ -17,5 +17,7 @@ public interface IUserService extends IGeneralService<User> {
     UserId getUserByIdExceptPassword(Long userId);
     List<UserId>getAllUsersExceptPasswordAndBlock();
 
+//    List<User> findAllFriendsByUserId(Long userId);
+
 
 }

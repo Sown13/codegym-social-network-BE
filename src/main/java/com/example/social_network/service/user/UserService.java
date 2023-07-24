@@ -103,4 +103,11 @@ public class UserService implements IUserService {
 //        return userRepo.findUserByAccountName(name);
 //    }
 
+
+//    @Override
+//    public List<User> findAllFriendsByUserId(Long userId) {
+//        Iterable<User> friendList = userRepo.findListFriendByUserId(userId);
+//
+//        return null;
+//    }
 }
