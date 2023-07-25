@@ -1,4 +1,4 @@
-package com.example.social_network.model.friend;
+package com.example.social_network.model.user_friend;
 
 import com.example.social_network.model.user.User;
 import jakarta.persistence.*;

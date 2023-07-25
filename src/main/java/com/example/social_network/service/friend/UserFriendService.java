@@ -3,8 +3,8 @@ package com.example.social_network.service.friend;
 import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
-import com.example.social_network.model.friend.UserFriend;
-import com.example.social_network.repo.user.UserFriendRepo;
+import com.example.social_network.model.user_friend.UserFriend;
+import com.example.social_network.repo.user_friend.UserFriendRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
