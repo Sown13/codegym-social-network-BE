@@ -81,15 +81,9 @@ public class UserFriendService implements IUserFriendService {
     }
 
     @Override
-    public HaveBeenFriendsDTO findRelationShip(Long targetId, Long sourceId) {
-        Optional<Object> relationShip = userFriendRepo.findRelationShip(targetId, sourceId);
-        HaveBeenFriendsDTO result = new HaveBeenFriendsDTO();
-        if (relationShip.isPresent()) {
-            Object[] values = (Object[]) relationShip.get();
-            result.setAccepted((Boolean) values[0]);
-            result.setFriendType((String) values[1]);
-        }
-        return result;
+    public Optional<UserFriend> findRelationShip(Long targetId, Long sourceId) {
+        Optional<UserFriend> relationShip = userFriendRepo.findRelationShip(targetId, sourceId);
+        return relationShip;
     }
 
 

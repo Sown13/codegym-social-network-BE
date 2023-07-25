@@ -8,6 +8,7 @@ import com.example.social_network.service.IGeneralService;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IUserFriendService extends IGeneralService<UserFriend> {
     Iterable<UserFriend> findAllFriendsByUserId(Long id);
@@ -17,6 +18,6 @@ public interface IUserFriendService extends IGeneralService<UserFriend> {
 
     List<TargetUserFriendDTO> findUserFriendByTargetUser(Long id);
 
-   HaveBeenFriendsDTO findRelationShip(@Param("targetId") Long targetId, @Param("sourceId") Long sourceId);
+   Optional<UserFriend> findRelationShip(@Param("targetId") Long targetId, @Param("sourceId") Long sourceId);
 
 }
