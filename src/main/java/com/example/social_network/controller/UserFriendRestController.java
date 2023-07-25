@@ -1,8 +1,8 @@
 package com.example.social_network.controller;
 
-import com.example.social_network.model.friend.dto.HaveBeenFriendsDTO;
-import com.example.social_network.model.friend.dto.SourceUserFriendDTO;
-import com.example.social_network.model.friend.dto.TargetUserFriendDTO;
+import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
+import com.example.social_network.dto.dto.SourceUserFriendDTO;
+import com.example.social_network.dto.dto.TargetUserFriendDTO;
 import com.example.social_network.model.friend.UserFriend;
 import com.example.social_network.service.friend.UserFriendService;
 import org.springframework.beans.factory.annotation.Autowired;

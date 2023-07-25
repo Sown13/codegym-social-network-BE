@@ -1,4 +1,4 @@
-package com.example.social_network.repo;
+package com.example.social_network.repo.user;
 
 import com.example.social_network.model.friend.UserFriend;
 import jakarta.persistence.PersistenceContext;

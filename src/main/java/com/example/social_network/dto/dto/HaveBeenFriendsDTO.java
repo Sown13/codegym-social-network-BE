@@ -1,4 +1,4 @@
-package com.example.social_network.model.friend.dto;
+package com.example.social_network.dto.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
