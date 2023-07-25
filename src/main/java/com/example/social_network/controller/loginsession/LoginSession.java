@@ -2,14 +2,19 @@ package com.example.social_network.controller.loginsession;
 
 import com.example.social_network.model.user.User;
 import com.example.social_network.model.user.dto.UserLoginDTO;
+import com.example.social_network.repo.UserRepo;
 import com.example.social_network.service.user.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -17,7 +22,13 @@ import java.util.Optional;
 public class LoginSession {
 
     @Autowired
+    private UserRepo userRepo;
+
+    @Autowired
     IUserService userService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @PostMapping("/login")
@@ -55,7 +66,6 @@ public class LoginSession {
         }
     }
 
-
     @GetMapping("/logout")
         public ResponseEntity<String> logout(HttpServletRequest request) {
             HttpSession session = request.getSession(false);
@@ -64,6 +74,45 @@ public class LoginSession {
             }
             return ResponseEntity.ok("Logged out successfully");
         }
+
+    @PostMapping("/register")
+    public ResponseEntity<String> registerUser(@RequestBody User user) {
+        User savedUser = null;
+        ResponseEntity response = null;
+        try {
+            String hashPwd = passwordEncoder.encode(user.getPassword());
+            user.setPassword(hashPwd);
+            user.setCreatedDate(new Date(System.currentTimeMillis()));
+            savedUser = userRepo.save(user);
+            if (savedUser.getUserId() > 0) {
+                response = ResponseEntity
+                        .status(HttpStatus.CREATED)
+                        .body("Given user details are successfully registered");
+            }
+        } catch (Exception ex) {
+            response = ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An exception occured due to " + ex.getMessage());
+        }
+        return response;
+    }
+
+
+    @RequestMapping("/user")
+    public User getUserDetailsAfterLogin(Authentication authentication) {
+        Optional<User> user = userRepo.findUserByAccountName(authentication.getName());
+        if (user.isPresent()) {
+            return user.get();
+        } else {
+            return null;
+        }
+
+    }
+
+    @RequestMapping("/dung")
+    public String dung() {
+        return "dfadsf";
+    }
 
 //    @GetMapping("/home")
 //    public String home(HttpServletRequest request) {

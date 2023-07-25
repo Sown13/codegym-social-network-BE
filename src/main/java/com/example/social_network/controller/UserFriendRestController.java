@@ -23,7 +23,7 @@ public class UserFriendRestController {
     @Autowired
     UserFriendService userFriendService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<Iterable<UserFriend>> findAll() {
         Iterable<UserFriend> userFriendIterable = userFriendService.findAll();
         return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
@@ -97,12 +97,6 @@ public class UserFriendRestController {
         return ResponseEntity.ok(haveBeenFriends);
 
     }
-
-
-
-
-
-
 }
 
 

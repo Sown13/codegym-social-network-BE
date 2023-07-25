@@ -60,7 +60,6 @@ public class UserFriendService implements IUserFriendService {
             boolean isAccepted = (Boolean) result[3];
             userFriends.add(new SourceUserFriendDTO(sourceUserId, targetUserId, accountName, isAccepted));
         }
-
         return userFriends;
     }
 
@@ -76,7 +75,6 @@ public class UserFriendService implements IUserFriendService {
             boolean isAccepted = (Boolean) targetResult[3];
             targetUserFriends.add(new TargetUserFriendDTO(sourceUserId, targetUserId, accountName, isAccepted));
         }
-
         return targetUserFriends;
     }
 
@@ -95,8 +93,4 @@ public class UserFriendService implements IUserFriendService {
 
         return haveBeenFriendsDTOS;
     }
-
-
-
-
 }

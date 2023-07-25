@@ -22,7 +22,7 @@ public class User {
     @NotBlank(message = "Username is required")
     private String accountName;
     @NotBlank(message = "Password is required")
-    @Size(min = 6, max = 32, message = "Password must be between 6 and 32 characters")
+    @Size(min = 1, max = 255, message = "Password must be between 6 and 32 characters")
     private String password;
     @Column(unique = true)
     @NotBlank(message = "Email is required")
