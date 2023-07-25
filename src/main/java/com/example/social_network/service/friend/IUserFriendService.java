@@ -15,7 +15,8 @@ public interface IUserFriendService extends IGeneralService<UserFriend> {
 
     List<TargetUserFriendDTO> findUserFriendByTargetUser(Long id);
 
-    List<HaveBeenFriendsDTO> findUserFriendByTargetUserOrSourceUser(@Param("targetId") Long targetId, @Param("sourceId") Long sourceId);
+   HaveBeenFriendsDTO findRelationShip(@Param("targetId") Long targetId, @Param("sourceId") Long sourceId);
+//    List<HaveBeenFriendsDTO> findUserFriendByTargetUserOrSourceUser(@Param("targetId") Long targetId, @Param("sourceId") Long sourceId);
 
     List<MutualFriendsDTO> findAcceptedUserFriendsByTargetUserId(Long targetUserId);
 

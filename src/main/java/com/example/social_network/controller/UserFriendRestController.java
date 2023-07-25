@@ -16,13 +16,14 @@ import java.util.Optional;
 
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/user-friends")
 public class UserFriendRestController {
 
     @Autowired
     UserFriendService userFriendService;
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<Iterable<UserFriend>> findAll() {
         Iterable<UserFriend> userFriendIterable = userFriendService.findAll();
         return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
@@ -75,14 +76,14 @@ public class UserFriendRestController {
 
 
     // Lời mời s-u and false , source gửi lời mời đến target
-        @GetMapping("/{id}/friend-request-sent")
+        @GetMapping("/user/{id}/friend-request-sent")
     public ResponseEntity<Iterable<SourceUserFriendDTO>> sourceSendFriend(@PathVariable Long id) {
         Iterable<SourceUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByUserFriendId(id);
         return new ResponseEntity<>(userFriendIterable,HttpStatus.OK);
     }
 
     // t-u and false , nhận  lời mời gửi đến từ s-u
-    @GetMapping("/{id}/friend-request-receive")
+    @GetMapping("/user/{id}/friend-request-receive")
     public ResponseEntity<Iterable<TargetUserFriendDTO>> targetSendFriend(@PathVariable Long id) {
         Iterable<TargetUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByTargetUser(id);
         return new ResponseEntity<>(userFriendIterable,HttpStatus.OK);
@@ -91,20 +92,25 @@ public class UserFriendRestController {
 
     // Query s-u || f-u and true ,  đều là bạn bè với nhau
     @GetMapping("/have-been-friend/{sourceId}/{targetId}")
-    public ResponseEntity<Iterable<HaveBeenFriendsDTO>> getHaveBeenFriends(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
-        Iterable<HaveBeenFriendsDTO> haveBeenFriends = userFriendService.findUserFriendByTargetUserOrSourceUser(targetId, sourceId);
+    public ResponseEntity<HaveBeenFriendsDTO> getHaveBeenFriends(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+        HaveBeenFriendsDTO haveBeenFriends = userFriendService.findRelationShip(targetId, sourceId);
         return ResponseEntity.ok(haveBeenFriends);
 
     }
 
-    @GetMapping("/friends/{targetUserId}")
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<Iterable<UserFriend>> findAllFriendByUserId(@PathVariable Long userId) {
+        Iterable<UserFriend> friendList = userFriendService.findAllFriendsByUserId(userId);
+            return new ResponseEntity<>(friendList, HttpStatus.OK);
+    }
+    @GetMapping("/mutual-friend/{targetUserId}")
     public ResponseEntity<List<MutualFriendsDTO>> getAcceptedFriendsOfUser(@PathVariable Long targetUserId) {
         List<MutualFriendsDTO> friends = userFriendService.findAcceptedUserFriendsByTargetUserId(targetUserId);
         return new ResponseEntity<>(friends,HttpStatus.OK);
     }
 
 
-    @GetMapping("/countAcceptedFriends/{targetUserId}")
+    @GetMapping("/count-accepted-friends/{targetUserId}")
     public ResponseEntity<CountMutualFriendDTO> countAcceptedFriends(@PathVariable Long targetUserId) {
         CountMutualFriendDTO result = userFriendService.countAcceptedFriendsByUserId(targetUserId);
         return new ResponseEntity<>(result, HttpStatus.OK);

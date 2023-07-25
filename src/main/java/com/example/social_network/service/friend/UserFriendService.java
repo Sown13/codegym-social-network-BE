@@ -79,19 +79,15 @@ public class UserFriendService implements IUserFriendService {
     }
 
     @Override
-    public List<HaveBeenFriendsDTO> findUserFriendByTargetUserOrSourceUser(Long targetId, Long sourceId) {
-        List<Object[]> targetResults = userFriendRepo.findUserFriendByTargetUserOrSourceUser(targetId, sourceId);
-        List<HaveBeenFriendsDTO> haveBeenFriendsDTOS = new ArrayList<>();
-
-        for (Object[] haveBeenFriendResult : targetResults) {
-            Long sourceUserId = (Long) haveBeenFriendResult[0];
-            Long targetUserId = (Long) haveBeenFriendResult[1];
-            String accountName = (String) haveBeenFriendResult[2];
-            boolean isAccepted = (Boolean) haveBeenFriendResult[3];
-            haveBeenFriendsDTOS.add(new HaveBeenFriendsDTO(sourceUserId, targetUserId, accountName, isAccepted));
+    public HaveBeenFriendsDTO findRelationShip(Long targetId, Long sourceId) {
+        Optional<Object> relationShip = userFriendRepo.findRelationShip(targetId, sourceId);
+        HaveBeenFriendsDTO result = new HaveBeenFriendsDTO();
+        if (relationShip.isPresent()) {
+            Object[] values = (Object[]) relationShip.get();
+            result.setAccepted((Boolean) values[0]);
+            result.setFriendType((String) values[1]);
         }
-
-        return haveBeenFriendsDTOS;
+        return result;
     }
 
     @Override
@@ -115,6 +111,5 @@ public class UserFriendService implements IUserFriendService {
         Long count = userFriendRepo.countAcceptedFriendsByUserId(userId);
         return new CountMutualFriendDTO(count);
     }
-
 
 }
