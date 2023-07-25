@@ -42,7 +42,6 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
     @GetMapping("/search")
     private ResponseEntity<List<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
         List<User> listUser = userService.findAllUsersByAccount(name);
@@ -88,6 +87,7 @@ public class UserRestController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    //Phương thức này test không có vấn đề
     @PostMapping("/update-is-block/{id}")
     private ResponseEntity<?> isBlockUser(@PathVariable("id") Long id) {
         Optional<User> userOptional = userService.findById(id);

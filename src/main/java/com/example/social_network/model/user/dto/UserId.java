@@ -1,11 +1,9 @@
 package com.example.social_network.model.user.dto;
 
 import com.example.social_network.model.user.User;
-import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 
@@ -25,7 +23,7 @@ public class UserId {
     private String address;
     private Date createdDate;
     private String background;
-    private boolean isBlock;
+    private boolean isBlock=false;
 
     public UserId(User user) {
         this.userId = user.getUserId();
@@ -40,5 +38,6 @@ public class UserId {
         this.address = user.getAddress();
         this.createdDate = user.getCreatedDate();
         this.background = user.getBackground();
+        this.isBlock=user.isBlock();
     }
 }
