@@ -17,9 +17,11 @@ public class PostReaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long reactionId;
+    private String reactionType;
     private Date dateCreated;
     @ManyToOne
     private User user;
     @ManyToOne
     private Post post;
+
 }

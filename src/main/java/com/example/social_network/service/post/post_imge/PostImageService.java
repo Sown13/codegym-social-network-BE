@@ -14,7 +14,7 @@ public class PostImageService implements IPostImageService {
 
     @Override
     public Iterable<PostImage> findAll() {
-        return null;
+        return postImageRepo.findAll();
     }
 
     @Override
@@ -24,7 +24,7 @@ public class PostImageService implements IPostImageService {
 
     @Override
     public PostImage save(PostImage postImage) throws Exception {
-        return null;
+        return postImageRepo.save(postImage);
     }
 
     @Override
