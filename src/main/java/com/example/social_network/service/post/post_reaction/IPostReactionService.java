@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service
 public interface IPostReactionService extends IGeneralService<PostReaction> {
-    List<PostReaction>saveAll(List<PostReaction> postReactions);
+
 
     List<PostReactionDTO> findByPostIdAndUserId(Long postId , Long userId);
 

@@ -37,10 +37,7 @@ public class PostReactionService implements IPostReactionService {
     }
 
 
-    @Override
-    public List<PostReaction> saveAll(List<PostReaction> postReactions) {
-        return postReactionRepo.saveAll(postReactions);
-    }
+
 
     @Override
     public List<PostReactionDTO> findByPostIdAndUserId(Long postId, Long userId) {
