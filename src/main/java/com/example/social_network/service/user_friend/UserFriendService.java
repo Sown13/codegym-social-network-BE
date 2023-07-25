@@ -1,6 +1,5 @@
-package com.example.social_network.service.friend;
+package com.example.social_network.service.user_friend;
 
-import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
