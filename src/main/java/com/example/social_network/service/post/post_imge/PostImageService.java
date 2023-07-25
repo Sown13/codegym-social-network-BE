@@ -29,6 +29,6 @@ public class PostImageService implements IPostImageService {
 
     @Override
     public void remove(Long id) {
-
+        postImageRepo.deleteById(id);
     }
 }
