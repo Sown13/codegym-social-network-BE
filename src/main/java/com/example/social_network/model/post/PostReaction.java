@@ -16,7 +16,8 @@ import java.util.Date;
 public class PostReaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long ReactionId;
+    private Long reactionId;
+    private String reactionType;
     private Date dateCreated;
     @ManyToOne
     private User user;

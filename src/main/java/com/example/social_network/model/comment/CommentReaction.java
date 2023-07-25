@@ -17,6 +17,7 @@ public class CommentReaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long cReactionId;
+    private String reactionType;
     private Date dateCreated;
     @ManyToOne
     private User user;
