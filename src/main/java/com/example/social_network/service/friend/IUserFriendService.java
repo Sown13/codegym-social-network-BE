@@ -1,9 +1,13 @@
 package com.example.social_network.service.friend;
 
-import com.example.social_network.model.friend.dto.*;
-import com.example.social_network.model.friend.UserFriend;
+import com.example.social_network.dto.dto.CountMutualFriendDTO;
+import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
+import com.example.social_network.dto.dto.SourceUserFriendDTO;
+import com.example.social_network.dto.dto.TargetUserFriendDTO;
+import com.example.social_network.model.user_friend.UserFriend;
 import com.example.social_network.service.IGeneralService;
 import org.springframework.data.repository.query.Param;
+import com.example.social_network.model.friend.dto.MutualFriendsDTO;
 
 import java.util.List;
 import java.util.Optional;

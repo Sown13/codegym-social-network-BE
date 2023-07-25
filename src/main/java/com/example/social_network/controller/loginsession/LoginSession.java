@@ -1,7 +1,7 @@
 package com.example.social_network.controller.loginsession;
 
 import com.example.social_network.model.user.User;
-import com.example.social_network.model.user.dto.UserLoginDTO;
+import com.example.social_network.dto.dto_user.UserLoginDTO;
 import com.example.social_network.service.user.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

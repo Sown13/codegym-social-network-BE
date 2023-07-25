@@ -1,10 +1,14 @@
 package com.example.social_network.service.friend;
 
-import com.example.social_network.model.friend.dto.*;
-import com.example.social_network.model.friend.UserFriend;
-import com.example.social_network.repo.UserFriendRepo;
+import com.example.social_network.dto.dto.CountMutualFriendDTO;
+import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
+import com.example.social_network.dto.dto.SourceUserFriendDTO;
+import com.example.social_network.dto.dto.TargetUserFriendDTO;
+import com.example.social_network.model.user_friend.UserFriend;
+import com.example.social_network.repo.user_friend.UserFriendRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.social_network.model.friend.dto.MutualFriendsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,7 +100,6 @@ public class UserFriendService implements IUserFriendService {
             boolean isAccepted = (Boolean) MutualFriendResult[3];
             mutualFriendsDTOS.add(new MutualFriendsDTO(sourceUserId, targetUserId, accountName, isAccepted));
         }
-
         return mutualFriendsDTOS;
     }
 
@@ -105,5 +108,6 @@ public class UserFriendService implements IUserFriendService {
         Long count = userFriendRepo.countAcceptedFriendsByUserId(userId);
         return new CountMutualFriendDTO(count);
     }
+
 
 }

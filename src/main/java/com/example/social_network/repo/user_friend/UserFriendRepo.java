@@ -1,6 +1,6 @@
-package com.example.social_network.repo;
+package com.example.social_network.repo.user_friend;
 
-import com.example.social_network.model.friend.UserFriend;
+import com.example.social_network.model.user_friend.UserFriend;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

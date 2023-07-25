@@ -1,1 +1,0 @@
-SELECT COUNT(*) FROM social_network.user_friend WHERE is_accepted = true ;
