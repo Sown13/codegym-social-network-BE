@@ -19,7 +19,7 @@ public class Post {
     private Long PostId;
     private String textContent;
     private Date dateCreated;
-    private Date updateCrated;
+    private Date updateCreated;
     private String authorizedView;
     @ManyToOne
     private User user;
