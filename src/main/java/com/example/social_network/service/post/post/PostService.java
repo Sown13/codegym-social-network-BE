@@ -24,7 +24,7 @@ public class PostService implements IPostService {
 
     @Override
     public Post save(Post post) throws Exception {
-        return null;
+        return postRepo.save(post);
     }
 
     @Override
