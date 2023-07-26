@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table()
@@ -23,5 +24,7 @@ public class Post {
     private String authorizedView;
     @ManyToOne
     private User user;
+    @OneToMany(mappedBy = "post")
+    List<PostImage> postImageList;
 
 }
