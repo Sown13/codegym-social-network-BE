@@ -2,8 +2,8 @@ package com.example.social_network.service.post.post_reaction;
 
 import com.example.social_network.model.post.Post;
 import com.example.social_network.model.post.PostReaction;
-import com.example.social_network.repo.post.PostReactionRepo;
-import com.example.social_network.repo.post.PostRepo;
+import com.example.social_network.repo.post.IPostReactionRepo;
+import com.example.social_network.repo.post.IPostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +12,10 @@ import java.util.Optional;
 @Service
 public class PostReactionService implements IPostReactionService{
     @Autowired
-    private PostReactionRepo postReactionRepo;
+    private IPostReactionRepo postReactionRepo;
+
     @Autowired
-    private PostRepo postRepo;
+    private IPostRepo postRepo;
 
     @Override
     public Iterable<PostReaction> findAll() {

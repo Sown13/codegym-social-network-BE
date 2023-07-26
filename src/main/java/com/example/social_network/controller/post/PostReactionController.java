@@ -1,4 +1,4 @@
-package com.example.social_network.controller;
+package com.example.social_network.controller.post;
 import com.example.social_network.service.post.post_reaction.IPostReactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

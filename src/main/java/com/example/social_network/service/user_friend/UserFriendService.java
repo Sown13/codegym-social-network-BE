@@ -3,7 +3,7 @@ package com.example.social_network.service.user_friend;
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
-import com.example.social_network.repo.user_friend.UserFriendRepo;
+import com.example.social_network.repo.user_friend.IUserFriendRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,41 +15,41 @@ import java.util.Optional;
 public class UserFriendService implements IUserFriendService {
 
     @Autowired
-    UserFriendRepo userFriendRepo;
+    IUserFriendRepo IUserFriendRepo;
 
     @Override
     public Iterable<UserFriend> findAll() {
-        return userFriendRepo.findAll();
+        return IUserFriendRepo.findAll();
     }
 
     @Override
     public Optional<UserFriend> findById(Long id) {
-        return userFriendRepo.findById(id);
+        return IUserFriendRepo.findById(id);
     }
 
     @Override
     public UserFriend save(UserFriend userFriend) {
-        return userFriendRepo.save(userFriend);
+        return IUserFriendRepo.save(userFriend);
     }
 
     @Override
     public void remove(Long id) {
-        userFriendRepo.deleteById(id);
+        IUserFriendRepo.deleteById(id);
     }
 
     @Override
     public Iterable<UserFriend> findAllFriendsByUserId(Long id) {
-        return userFriendRepo.findUserFriendsAcceptedByUserId(id);
+        return IUserFriendRepo.findUserFriendsAcceptedByUserId(id);
     }
 
     @Override
     public Long countFriend(Long id) {
-        return userFriendRepo.countAllByUserFriend(id);
+        return IUserFriendRepo.countAllByUserFriend(id);
     }
 
     @Override
     public List<SourceUserFriendDTO> findUserFriendByUserFriendId(Long id) {
-        List<Object[]> results = userFriendRepo.findUserFriendByUserFriendId(id);
+        List<Object[]> results = IUserFriendRepo.findUserFriendByUserFriendId(id);
         List<SourceUserFriendDTO> userFriends = new ArrayList<>();
 
         for (Object[] result : results) {
@@ -65,7 +65,7 @@ public class UserFriendService implements IUserFriendService {
 
     @Override
     public List<TargetUserFriendDTO> findUserFriendByTargetUser(Long id) {
-        List<Object[]> targetResults = userFriendRepo.findUserFriendByTargetUser(id);
+        List<Object[]> targetResults = IUserFriendRepo.findUserFriendByTargetUser(id);
         List<TargetUserFriendDTO> targetUserFriends = new ArrayList<>();
 
         for (Object[] targetResult : targetResults) {
@@ -81,7 +81,7 @@ public class UserFriendService implements IUserFriendService {
 
     @Override
     public Optional<UserFriend> findRelationShip(Long targetId, Long sourceId) {
-        Optional<UserFriend> relationShip = userFriendRepo.findRelationShip(targetId, sourceId);
+        Optional<UserFriend> relationShip = IUserFriendRepo.findRelationShip(targetId, sourceId);
         return relationShip;
     }
 

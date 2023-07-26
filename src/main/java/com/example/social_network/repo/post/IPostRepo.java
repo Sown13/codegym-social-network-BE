@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PostRepo extends JpaRepository<Post,Long> {
+public interface IPostRepo extends JpaRepository<Post,Long> {
     @Query("SELECT p FROM Post p WHERE p.user.userId = :userId")
     Iterable<Post> findPostsByUserId(Long userId);
 
