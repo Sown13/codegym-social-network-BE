@@ -27,4 +27,9 @@ public class PostImageController {
         postImageService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Iterable<PostImage>> getImagesByPostId(@PathVariable Long id) {
+        return new ResponseEntity<>(postImageService.findImagesByPostId(id), HttpStatus.OK);
+    }
 }

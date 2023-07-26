@@ -31,4 +31,9 @@ public class PostImageService implements IPostImageService {
     public void remove(Long id) {
         postImageRepo.deleteById(id);
     }
+    @Override
+    public Iterable<PostImage> findImagesByPostId(Long id) {
+        return postImageRepo.findImagesByPostId(id);
+    }
+
 }
