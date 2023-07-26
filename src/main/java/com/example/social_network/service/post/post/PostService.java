@@ -1,6 +1,7 @@
 package com.example.social_network.service.post.post;
 
 import com.example.social_network.model.post.Post;
+import com.example.social_network.model.post.PostImage;
 import com.example.social_network.repo.post.PostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ public class PostService implements IPostService {
 
     @Override
     public Iterable<Post> findAll() {
-        return null;
+        return postRepo.findAll();
     }
 
     @Override
@@ -30,5 +31,20 @@ public class PostService implements IPostService {
     @Override
     public void remove(Long id) {
 
+    }
+
+    @Override
+    public Iterable<Post> findPostsByUserId(Long id) {
+        return postRepo.findPostsByUserId(id);
+    }
+
+    @Override
+    public Iterable<PostImage> findImagesByPostId(Long id) {
+        return postRepo.findImagesByPostId(id);
+    }
+
+    @Override
+    public Iterable<Post> findPostsOfAcceptedFriends(Long id) {
+        return postRepo.findPostsOfAcceptedFriends(id);
     }
 }
