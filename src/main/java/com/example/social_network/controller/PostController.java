@@ -34,4 +34,5 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findAllPostWhereIsAcceptedTrue(@PathVariable Long id) {
         return new ResponseEntity<>(this.iPostService.findPostsOfAcceptedFriends(id),  HttpStatus.OK);
     }
+
 }
