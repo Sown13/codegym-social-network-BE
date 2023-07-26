@@ -38,10 +38,6 @@ public class PostService implements IPostService {
         return postRepo.findPostsByUserId(id);
     }
 
-    @Override
-    public Iterable<PostImage> findImagesByPostId(Long id) {
-        return postRepo.findImagesByPostId(id);
-    }
 
     @Override
     public Iterable<Post> findPostsOfAcceptedFriends(Long id) {
