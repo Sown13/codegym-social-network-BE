@@ -9,4 +9,6 @@ import java.util.List;
 
 @Repository
 public interface IPostImageRepo extends JpaRepository<PostImage,Long> {
+    @Query("SELECT pi FROM PostImage pi WHERE pi.post.postId = :postId")
+    Iterable<PostImage> findImagesByPostId(Long postId);
 }

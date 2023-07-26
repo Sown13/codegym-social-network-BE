@@ -33,10 +33,7 @@ public class PostController {
         return new ResponseEntity<>(postService.findPostsByUserId(id), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Iterable<PostImage>> getImagesByPostId(@PathVariable Long id) {
-        return new ResponseEntity<>(postService.findImagesByPostId(id), HttpStatus.OK);
-    }
+
 
     @GetMapping("userSource/{id}")
     public ResponseEntity<Iterable<Post>> findAllPostWhereIsAcceptedTrue(@PathVariable Long id) {
