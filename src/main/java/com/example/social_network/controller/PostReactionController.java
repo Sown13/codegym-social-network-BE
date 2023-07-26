@@ -48,24 +48,19 @@ public class PostReactionController {
         List<PostReaction> postReactions = postReactionService.findByUserIdAAndPostId(userId, postId);
 
         if (!postReactions.isEmpty()) {
-            // If there are existing PostReactions, return the first one found
             return new ResponseEntity<>(postReactions.get(0), HttpStatus.OK);
         } else {
-            // Create User and Post objects from the IDs received from the URL path
             User user = new User();
             user.setUserId(userId);
 
             Post post = new Post();
             post.setPostId(postId);
 
-            // Create a new PostReaction object
             PostReaction newPostReaction = new PostReaction();
 
-            // Set the relationship with the User and Post objects
             newPostReaction.setUser(user);
             newPostReaction.setPost(post);
 
-            // Save the newPostReaction to the database through the service
             PostReaction savedPostReaction = postReactionService.save(newPostReaction);
 
             return new ResponseEntity<>(savedPostReaction, HttpStatus.OK);
