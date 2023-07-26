@@ -1,7 +1,7 @@
-package com.example.social_network.service.post.post_imge;
+package com.example.social_network.service.post.post_image;
 
 import com.example.social_network.model.post.PostImage;
-import com.example.social_network.repo.post.PostImageRepo;
+import com.example.social_network.repo.post.IPostImageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class PostImageService implements IPostImageService {
     @Autowired
-    private PostImageRepo postImageRepo;
+    private IPostImageRepo postImageRepo;
 
     @Override
     public Iterable<PostImage> findAll() {
@@ -29,6 +29,6 @@ public class PostImageService implements IPostImageService {
 
     @Override
     public void remove(Long id) {
-
+        postImageRepo.deleteById(id);
     }
 }

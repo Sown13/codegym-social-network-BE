@@ -1,4 +1,4 @@
-package com.example.social_network.controller;
+package com.example.social_network.controller.notification;
 
 import com.example.social_network.model.notification.Notification;
 import com.example.social_network.service.notification.INotificationService;

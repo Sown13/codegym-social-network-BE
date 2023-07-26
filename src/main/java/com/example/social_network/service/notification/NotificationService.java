@@ -1,6 +1,6 @@
 package com.example.social_network.service.notification;
 import com.example.social_network.model.notification.Notification;
-import com.example.social_network.repo.notification.NotificationRepo;
+import com.example.social_network.repo.notification.INotificationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +9,7 @@ import java.util.Optional;
 @Service
 public class NotificationService implements INotificationService {
     @Autowired
-    private NotificationRepo notificationRepo;
+    private INotificationRepo INotificationRepo;
 
     @Override
     public Iterable<Notification> findAll() {
@@ -23,16 +23,16 @@ public class NotificationService implements INotificationService {
 
     @Override
     public Notification save(Notification notification) {
-        return notificationRepo.save(notification);
+        return INotificationRepo.save(notification);
     }
 
     @Override
     public void remove(Long id) {
-        notificationRepo.deleteById(id);
+        INotificationRepo.deleteById(id);
     }
 
     @Override
     public Iterable<Notification> findAllNotificationByUserId(Long id) {
-        return this.notificationRepo.findAllNotificationByUserId(id);
+        return this.INotificationRepo.findAllNotificationByUserId(id);
     }
 }

@@ -20,5 +20,4 @@ public class PostImage {
     private Date dateCreated;
     @ManyToOne
     private Post post;
-
 }

@@ -10,10 +10,12 @@ import java.util.Optional;
 
 @Service
 public interface IPostReactionService extends IGeneralService<PostReaction> {
+    Long countPostReactionByPostId(Long postId);
+    Long countPostReactionByPostIdAndReactionType(Long id,String type);
 
 
-    List<PostReactionDTO> findByPostIdAndUserId(Long postId , Long userId);
+    List<PostReaction> findByPostIdAndUserId(Long postId, Long userId);
 
-    List<PostReaction> findByUserIdAAndPostId(Long userId, Long postId);
+    List<PostReaction> DeleteUserIdAAndPostId( Long postId ,Long userId);
 
 }

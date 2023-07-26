@@ -16,7 +16,7 @@ import java.util.Date;
 public class CommentReaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Long cReactionId;
+    private Long commentReactionId;
     private String reactionType;
     private Date dateCreated;
     @ManyToOne
