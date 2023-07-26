@@ -10,11 +10,11 @@ import java.util.Optional;
 @Service
 public class PostImageService implements IPostImageService {
     @Autowired
-    private IPostImageRepo IPostImageRepo;
+    private IPostImageRepo postImageRepo;
 
     @Override
     public Iterable<PostImage> findAll() {
-        return IPostImageRepo.findAll();
+        return postImageRepo.findAll();
     }
 
     @Override
@@ -24,11 +24,11 @@ public class PostImageService implements IPostImageService {
 
     @Override
     public PostImage save(PostImage postImage) throws Exception {
-        return IPostImageRepo.save(postImage);
+        return postImageRepo.save(postImage);
     }
 
     @Override
     public void remove(Long id) {
-
+        postImageRepo.deleteById(id);
     }
 }
