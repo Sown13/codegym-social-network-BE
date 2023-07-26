@@ -2,7 +2,7 @@ package com.example.social_network.service.user;
 
 import com.example.social_network.model.user.User;
 import com.example.social_network.dto.dto_user.UserId;
-import com.example.social_network.repo.user.UserRepo;
+import com.example.social_network.repo.user.IUserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,32 +14,32 @@ import java.util.Optional;
 public class UserService implements IUserService {
 
     @Autowired
-    private UserRepo userRepo;
+    private IUserRepo IUserRepo;
     @Override
     public Iterable<User> findAll() {
-        return userRepo.findAll();
+        return IUserRepo.findAll();
     }
     @Override
     public Optional<User> findById(Long id) {
-      return userRepo.findById(id);
+      return IUserRepo.findById(id);
     }
 
 
     @Override
     public User save(User user) throws Exception {
-        if (userRepo.findUserByAccountName(user.getAccountName()).isPresent()) {
+        if (IUserRepo.findUserByAccountName(user.getAccountName()).isPresent()) {
             throw new Exception("Username already exists");
         }
 
-        if (userRepo.findUsersByEmail(user.getEmail()).isPresent()) {
+        if (IUserRepo.findUsersByEmail(user.getEmail()).isPresent()) {
             throw new Exception("Email already exists");
         }
 
-        return userRepo.save(user);
+        return IUserRepo.save(user);
     }
 
     public User getUserByUsername(String username) throws Exception {
-        Optional<User> optionalUser = userRepo.findUserByAccountName(username);
+        Optional<User> optionalUser = IUserRepo.findUserByAccountName(username);
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         } else {
@@ -48,7 +48,7 @@ public class UserService implements IUserService {
     }
     @Override
     public UserId getUserByIdExceptPassword(Long userId) {
-        Optional<User> userOptional = userRepo.findById(userId);
+        Optional<User> userOptional = IUserRepo.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             // ^ tạo đối tượng UserId với trường userId được lấy từ đối tượng User
@@ -62,7 +62,7 @@ public class UserService implements IUserService {
 
     @Override
     public List<UserId> getAllUsersExceptPasswordAndBlock() {
-        List<User>users=userRepo.findAll();
+        List<User>users= IUserRepo.findAll();
         List<UserId>userIdsList=new ArrayList<>();
         for (User user :users) {
             userIdsList.add(new UserId(user));
@@ -77,12 +77,12 @@ public class UserService implements IUserService {
 
     @Override
     public List<User> findAllUsersByAccount(String account) {
-        return userRepo.findUsersByAccountNameContaining(account);
+        return IUserRepo.findUsersByAccountNameContaining(account);
     }
 
     @Override
     public Optional<User> findByAccountName(String accountName) {
-        return userRepo.findUserByAccountName(accountName);
+        return IUserRepo.findUserByAccountName(accountName);
     }
 
     @Override
@@ -93,7 +93,7 @@ public class UserService implements IUserService {
 
     @Override
     public User update(User user) {
-        return userRepo.save(user);
+        return IUserRepo.save(user);
     }
 
 

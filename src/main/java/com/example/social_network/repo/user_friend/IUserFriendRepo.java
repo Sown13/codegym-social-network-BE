@@ -13,7 +13,7 @@ import java.util.Optional;
 @PersistenceContext
 
 @Repository
-public interface UserFriendRepo extends JpaRepository<UserFriend, Long> {
+public interface IUserFriendRepo extends JpaRepository<UserFriend, Long> {
     @Query("SELECT COUNT(*) FROM UserFriend u WHERE u.isAccepted = true AND u.targetUser = :userId")
     Long countAllByUserFriend(@Param("userId") Long userId);
 

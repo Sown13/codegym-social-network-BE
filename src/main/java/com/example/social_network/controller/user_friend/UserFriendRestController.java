@@ -1,4 +1,4 @@
-package com.example.social_network.controller;
+package com.example.social_network.controller.user_friend;
 
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
