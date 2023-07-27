@@ -60,7 +60,7 @@ public class PostController {
     }
 
 
-    @GetMapping("userSource/{id}")
+    @GetMapping("user-source/{id}")
     public ResponseEntity<Iterable<Post>> findAllPostWhereIsAcceptedTrue(@PathVariable Long id) {
         return new ResponseEntity<>(this.postService.findPostsOfAcceptedFriends(id), HttpStatus.OK);
     }
