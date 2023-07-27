@@ -29,7 +29,7 @@ public class PostImageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/post/{id}")
     public ResponseEntity<Iterable<PostImage>> getImagesByPostId(@PathVariable Long id) {
         return new ResponseEntity<>(postImageService.findImagesByPostId(id), HttpStatus.OK);
     }

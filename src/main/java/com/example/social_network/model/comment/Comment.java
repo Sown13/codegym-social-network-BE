@@ -27,7 +27,6 @@ public class Comment {
     @JsonIgnore
     private Post post;
     @ManyToOne
-    @JsonIgnore
     private User user;
     @OneToMany(mappedBy = "comment")
     private List<CommentReaction> commentReactionList;
