@@ -1,4 +1,4 @@
-INSERT INTO post_image (date_created, img_url, post_post_id) VALUES
+INSERT INTO social_network.post_image (date_created, img_url, post_post_id) VALUES
 ('2023-07-25', 'https://th.bing.com/th/id/R.e216b57cd18f492853db2bc0fb931f3f?rik=%2b5UWaZ7e28dxSQ&pid=ImgRaw&r=0', 1),
 ('2023-07-25', 'https://th.bing.com/th/id/R.e216b57cd18f492853db2bc0fb931f3f?rik=%2b5UWaZ7e28dxSQ&pid=ImgRaw&r=0', 2),
 ('2023-07-25', 'https://th.bing.com/th/id/R.e216b57cd18f492853db2bc0fb931f3f?rik=%2b5UWaZ7e28dxSQ&pid=ImgRaw&r=0', 3),
