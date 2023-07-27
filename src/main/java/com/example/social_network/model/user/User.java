@@ -1,6 +1,8 @@
 package com.example.social_network.model.user;
 
 import com.example.social_network.model.comment.Comment;
+import com.example.social_network.model.user_friend.UserFriend;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -40,6 +42,5 @@ public class User {
     private Date createdDate;
     private String background;
     private boolean isBlock=false;
-    @OneToMany(mappedBy = "user")
-    private List<Comment> commentList;
+
 }

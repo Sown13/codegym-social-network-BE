@@ -1,6 +1,7 @@
 package com.example.social_network.model.post;
 
 import com.example.social_network.model.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,7 @@ public class PostReaction {
     @ManyToOne
     private User user;
     @ManyToOne
+    @JsonIgnore
     private Post post;
 
 }

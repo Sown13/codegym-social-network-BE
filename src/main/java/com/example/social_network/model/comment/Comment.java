@@ -24,6 +24,7 @@ public class Comment {
     private Date dateCreated;
     private Date updateCreated;
     @ManyToOne
+    @JsonIgnore
     private Post post;
     @ManyToOne
     private User user;
