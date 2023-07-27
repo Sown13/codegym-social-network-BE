@@ -1,4 +1,4 @@
-INSERT INTO `social_network`.post (`authorized_view`, `date_created`, `text_content`, `update_created`, `user_user_id`)
+INSERT INTO `social_network`.post (`authorized_view`, `date_created`, `text_content`, `date_updated`, `user_user_id`)
 VALUES
     ('public', '2023-07-25', 'Hôm nay là một ngày đẹp trời và tôi cảm thấy rất vui vì đã hoàn thành dự án của mình.', null, 1),
     ('public', '2023-07-25', 'Tôi vừa trở về từ chuyến đi du lịch tuyệt vời ở Nha Trang. Cảm giác thư giãn và hạnh phúc đến không tả được.', null, 1),

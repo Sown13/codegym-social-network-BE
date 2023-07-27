@@ -17,12 +17,14 @@ import java.util.Date;
 public class PostController {
     @Autowired
     private IPostService postService;
+
     @PostMapping("")
     private ResponseEntity<?> createPost(@RequestBody Post post) throws Exception {
         Date now = new Date();
         post.setDateCreated(now);
         return new ResponseEntity<>(postService.save(post), HttpStatus.OK);
     }
+
     @GetMapping
     public ResponseEntity<Iterable<Post>> findAllPost() {
         return new ResponseEntity<>(postService.findAll(), HttpStatus.OK);
@@ -34,9 +36,14 @@ public class PostController {
     }
 
 
-
     @GetMapping("userSource/{id}")
     public ResponseEntity<Iterable<Post>> findAllPostWhereIsAcceptedTrue(@PathVariable Long id) {
-        return new ResponseEntity<>(this.postService.findPostsOfAcceptedFriends(id),  HttpStatus.OK);
+        return new ResponseEntity<>(this.postService.findPostsOfAcceptedFriends(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePostByPostId(@PathVariable Long id) {
+        postService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

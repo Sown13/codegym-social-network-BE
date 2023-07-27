@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 
@@ -22,5 +24,6 @@ public class PostReaction {
     @ManyToOne
     private User user;
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Post post;
 }
