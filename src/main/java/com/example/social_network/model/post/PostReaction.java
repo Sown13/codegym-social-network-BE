@@ -17,7 +17,7 @@ public class PostReaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long reactionId;
-    private String reactionType;
+    private String reactionType = "LIKE";
     private Date dateCreated;
     @ManyToOne
     private User user;

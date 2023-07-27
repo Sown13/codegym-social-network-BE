@@ -1,5 +1,6 @@
 package com.example.social_network.model.user;
 
+import com.example.social_network.model.comment.Comment;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -38,7 +40,6 @@ public class User {
     private Date createdDate;
     private String background;
     private boolean isBlock=false;
-
-
-
+    @OneToMany(mappedBy = "user")
+    private List<Comment> commentList;
 }
