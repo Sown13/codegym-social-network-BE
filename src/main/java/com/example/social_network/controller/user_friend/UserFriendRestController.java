@@ -1,5 +1,7 @@
 package com.example.social_network.controller.user_friend;
 
+import com.example.social_network.dto.dto.CountMutualFriendDTO;
+import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
@@ -8,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.social_network.model.friend.dto.MutualFriendsDTO;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -118,6 +122,19 @@ public class UserFriendRestController {
         Iterable<UserFriend> friendList = userFriendService.findAllFriendsByUserId(userId);
         return new ResponseEntity<>(friendList, HttpStatus.OK);
     }
+    @GetMapping("/mutual-friend/{targetUserId}")
+    public ResponseEntity<List<MutualFriendsDTO>> getAcceptedFriendsOfUser(@PathVariable Long targetUserId) {
+        List<com.example.social_network.model.friend.dto.MutualFriendsDTO> friends = userFriendService.findAcceptedUserFriendsByTargetUserId(targetUserId);
+        return new ResponseEntity<>(friends,HttpStatus.OK);
+    }
+
+
+    @GetMapping("/count-accepted-friends/{targetUserId}")
+    public ResponseEntity<CountMutualFriendDTO> countAcceptedFriends(@PathVariable Long targetUserId) {
+        CountMutualFriendDTO result = userFriendService.countAcceptedFriendsByUserId(targetUserId);
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
 }
 
 

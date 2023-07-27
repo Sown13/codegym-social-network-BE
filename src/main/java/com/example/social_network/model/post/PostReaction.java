@@ -23,4 +23,5 @@ public class PostReaction {
     private User user;
     @ManyToOne
     private Post post;
+
 }

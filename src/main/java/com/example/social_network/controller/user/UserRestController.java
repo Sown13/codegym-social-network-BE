@@ -36,7 +36,7 @@ public class UserRestController {
     @GetMapping("/{id}")
     private ResponseEntity<UserId> findAUserById(@PathVariable("id") Long id) {
         UserId user = userService.getUserByIdExceptPassword(id);
-        if (user!=null) {
+        if (user != null) {
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -45,30 +45,30 @@ public class UserRestController {
     @GetMapping("/search")
     private ResponseEntity<List<User>> findUsersByAccountNameContaining(@RequestParam("name") String name) {
         List<User> listUser = userService.findAllUsersByAccount(name);
-         if(!listUser.isEmpty()){
-          return new ResponseEntity<>(listUser,HttpStatus.OK);
-         }
-         return new ResponseEntity<>(HttpStatus.OK);
+        if (!listUser.isEmpty()) {
+            return new ResponseEntity<>(listUser, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
-@PostMapping("/register")
-public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult bindingResult) {
-    if (bindingResult.hasErrors()) {
-        List<String> errors = bindingResult.getFieldErrors()
-                .stream()
-                .map(error -> error.getDefaultMessage())
-                .collect(Collectors.toList());
-        return ResponseEntity.badRequest().body(errors);
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getFieldErrors()
+                    .stream()
+                    .map(error -> error.getDefaultMessage())
+                    .collect(Collectors.toList());
+            return ResponseEntity.badRequest().body(errors);
+        }
+        try {
+            Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+            user.setCreatedDate(now);
+            userService.save(user);
+            return ResponseEntity.ok("User registered successfully");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-    try {
-        Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
-        user.setCreatedDate(now);
-        userService.save(user);
-        return ResponseEntity.ok("User registered successfully");
-    } catch (Exception e) {
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
-}
 
     @PostMapping("/update/{id}")
     private ResponseEntity<?> updatePassword(@Valid @PathVariable("id") Long id, @RequestBody @Validated UserDTO userDTO, BindingResult bindingResult) {
@@ -86,9 +86,10 @@ public ResponseEntity<?> registerUser(@Valid @RequestBody User user, BindingResu
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     //Phương thức này test không có vấn đề
     @PostMapping("/update-is-block/{id}")
-    private ResponseEntity<?>isBlockUser(@PathVariable("id")Long id){
+    private ResponseEntity<?> isBlockUser(@PathVariable("id") Long id) {
         Optional<User> userOptional = userService.findById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
