@@ -25,7 +25,6 @@ public class Post {
     private Date dateUpdated;
     private String authorizedView;
     @ManyToOne
-    @JsonIgnore
     private User user;
     @OneToMany(mappedBy = "post")
     List<PostImage> postImageList;

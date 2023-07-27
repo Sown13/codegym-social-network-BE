@@ -24,10 +24,8 @@ public class Comment {
     private Date dateCreated;
     private Date updateCreated;
     @ManyToOne
-    @JsonIgnore
     private Post post;
     @ManyToOne
-    @JsonIgnore
     private User user;
     @OneToMany(mappedBy = "comment")
     private List<CommentReaction> commentReactionList;
