@@ -19,7 +19,8 @@ public class PostImageService implements IPostImageService {
 
     @Override
     public Optional<PostImage> findById(Long id) {
-        return Optional.empty();
+        return postImageRepo.findById(id);
+
     }
 
     @Override
