@@ -1,11 +1,14 @@
 package com.example.social_network.service.user_friend;
 
+import com.example.social_network.dto.dto.CountMutualFriendDTO;
+import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
 import com.example.social_network.repo.user_friend.IUserFriendRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.example.social_network.model.friend.dto.MutualFriendsDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -85,6 +88,26 @@ public class UserFriendService implements IUserFriendService {
         return relationShip;
     }
 
+    @Override
+    public List<MutualFriendsDTO> findAcceptedUserFriendsByTargetUserId(Long targetUserId1) {
+        List<Object[]> MutualFriendResults = IUserFriendRepo.findAcceptedUserFriendsByTargetUserId(targetUserId1);
+        List<MutualFriendsDTO> mutualFriendsDTOS = new ArrayList<>();
+
+        for (Object[] MutualFriendResult : MutualFriendResults) {
+            Long sourceUserId = (Long) MutualFriendResult[0];
+            Long targetUserId = (Long) MutualFriendResult[1];
+            String accountName = (String) MutualFriendResult[2];
+            boolean isAccepted = (Boolean) MutualFriendResult[3];
+            mutualFriendsDTOS.add(new MutualFriendsDTO(sourceUserId, targetUserId, accountName, isAccepted));
+        }
+        return mutualFriendsDTOS;
+    }
+
+    @Override
+    public CountMutualFriendDTO countAcceptedFriendsByUserId(Long userId) {
+        Long count = IUserFriendRepo.countAcceptedFriendsByUserId(userId);
+        return new CountMutualFriendDTO(count);
+    }
 
 
 }

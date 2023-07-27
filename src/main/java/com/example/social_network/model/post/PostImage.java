@@ -1,5 +1,6 @@
 package com.example.social_network.model.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +23,6 @@ public class PostImage {
     private Date dateCreated;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
     private Post post;
 }

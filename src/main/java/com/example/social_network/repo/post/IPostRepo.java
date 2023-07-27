@@ -13,8 +13,9 @@ public interface IPostRepo extends JpaRepository<Post,Long> {
 
 
 
-    @Query(value = "select * from social_network.post join social_network.user_friend as uf\n" +
-            "on post.user_user_id = uf.target_user_user_id where is_accepted = true\n" +
-            "                        and source_user_user_id = :id" ,nativeQuery = true)
+    @Query(value = "select * from social_network.post join social_network.user_friend as uf \n" +
+            "on post.user_user_id = uf.target_user_user_id where is_accepted = true and source_user_user_id = :id\n" +
+            "union select * from social_network.post join social_network.user_friend as uf \n" +
+            "on post.user_user_id = uf.source_user_user_id where is_accepted = true and target_user_user_id = :id" ,nativeQuery = true)
     Iterable<Post> findPostsOfAcceptedFriends(Long id);
 }

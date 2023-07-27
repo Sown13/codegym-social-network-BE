@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -28,8 +29,18 @@ public class PostImageController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/post/{id}")
     public ResponseEntity<Iterable<PostImage>> getImagesByPostId(@PathVariable Long id) {
         return new ResponseEntity<>(postImageService.findImagesByPostId(id), HttpStatus.OK);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?>updateImagePost(@PathVariable Long id,@RequestBody PostImage postImage){
+        Optional<PostImage> postImageOptional=postImageService.findById(id);
+      if(postImageOptional.isPresent()){
+          postImage.setPostImageId(id);
+          return new ResponseEntity<>(postImage,HttpStatus.OK);
+      }
+      return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
