@@ -45,7 +45,7 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findAllPost() {
         return new ResponseEntity<>(postService.findAll(), HttpStatus.OK);
     }
-    @GetMapping("/post/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?>findPostById(@PathVariable Long id){
         Optional<Post>postOptional=postService.findById(id);
         if(postOptional.isPresent()){
