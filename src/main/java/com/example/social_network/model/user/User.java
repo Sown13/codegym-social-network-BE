@@ -1,0 +1,46 @@
+package com.example.social_network.model.user;
+
+import com.example.social_network.model.comment.Comment;
+import com.example.social_network.model.user_friend.UserFriend;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import java.util.Date;
+import java.util.List;
+
+@Entity
+@Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+public class User {
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    private Long userId;
+    @Column(unique = true)
+    @NotBlank(message = "Username is required")
+    private String accountName;
+    @NotBlank(message = "Password is required")
+    @Size(min = 6, max = 32, message = "Password must be between 6 and 32 characters")
+    private String password;
+    @Column(unique = true)
+    @NotBlank(message = "Email is required")
+    @Email(message = "Invalid email format")
+    private String email;
+    private String fullName;
+    private String phone;
+    private Date birthday;
+    private String avatar;
+    private String hobby;
+    private String role= "USER";
+    private String address;
+    private Date createdDate;
+    private String background;
+    private boolean isBlock=false;
+
+}
