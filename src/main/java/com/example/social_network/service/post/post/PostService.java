@@ -6,6 +6,7 @@ import com.example.social_network.repo.post.IPostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -42,5 +43,10 @@ public class PostService implements IPostService {
     @Override
     public Iterable<Post> findPostsOfAcceptedFriends(Long id) {
         return postRepo.findPostsOfAcceptedFriends(id);
+    }
+
+    @Override
+    public List<Post> findByEveryBody(Long postId, Long userId) {
+        return postRepo.findByEveryBody(postId , userId);
     }
 }

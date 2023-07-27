@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -63,5 +64,17 @@ public class PostController {
     @GetMapping("userSource/{id}")
     public ResponseEntity<Iterable<Post>> findAllPostWhereIsAcceptedTrue(@PathVariable Long id) {
         return new ResponseEntity<>(this.postService.findPostsOfAcceptedFriends(id), HttpStatus.OK);
+    }
+
+
+    // quyền cho phép hiện thị mọi người xem được bài post
+    @GetMapping("/everybody/postId/{postId}/userId/{userId}")
+    public ResponseEntity<List<Post>> findAllByEverybody(@PathVariable Long postId , @PathVariable Long userId){
+
+        List<Post> postList = postService.findByEveryBody(postId , userId);
+        if (!postList.isEmpty()){
+            return new ResponseEntity<>(postList, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
