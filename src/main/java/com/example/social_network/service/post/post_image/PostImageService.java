@@ -5,6 +5,7 @@ import com.example.social_network.repo.post.IPostImageRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -37,4 +38,8 @@ public class PostImageService implements IPostImageService {
         return postImageRepo.findImagesByPostId(id);
     }
 
+    @Override
+    public List<PostImage> saveAll(List<PostImage> postImageList) {
+       return postImageRepo.saveAll(postImageList);
+    }
 }
