@@ -26,6 +26,7 @@ public class PostController {
         return new ResponseEntity<>(postService.save(post), HttpStatus.OK);
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable Long id, @RequestBody Post post) throws Exception {
         Optional<Post> postOptional = postService.findById(id);
@@ -44,7 +45,7 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findAllPost() {
         return new ResponseEntity<>(postService.findAll(), HttpStatus.OK);
     }
-    @GetMapping("/post/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?>findPostById(@PathVariable Long id){
         Optional<Post>postOptional=postService.findById(id);
         if(postOptional.isPresent()){
@@ -59,9 +60,14 @@ public class PostController {
     }
 
 
-
-    @GetMapping("userSource/{id}")
+    @GetMapping("user-source/{id}")
     public ResponseEntity<Iterable<Post>> findAllPostWhereIsAcceptedTrue(@PathVariable Long id) {
         return new ResponseEntity<>(this.postService.findPostsOfAcceptedFriends(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePostByPostId(@PathVariable Long id) {
+        postService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
