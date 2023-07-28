@@ -3,7 +3,9 @@ package com.example.social_network.repo.post;
 import com.example.social_network.model.post.Post;
 import com.example.social_network.model.post.PostImage;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,10 +22,7 @@ public interface IPostRepo extends JpaRepository<Post, Long> {
             "on post.user_user_id = uf.source_user_user_id where is_accepted = true and target_user_user_id = :id", nativeQuery = true)
     Iterable<Post> findPostsOfAcceptedFriends(Long id);
 
-    @Query(value = "select * from post\n" +
-            "join users on post.user_user_id = users.user_id\n" +
-            "join user_friend on user_friend.source_user_user_id = users.user_id \n" +
-            " where \n" +
-            " post.post_id = :postId  and post.user_user_id = :userId", nativeQuery = true)
-    List<Post> findByEveryBody(Long postId, Long userId);
+    @Modifying
+    @Query(value = "UPDATE Post p SET p.authorizedView = :authorizedView WHERE p.postId = :postId" , nativeQuery = true)
+    Post updateAuthorizedViewByPostId(Long postId, String authorizedView);
 }

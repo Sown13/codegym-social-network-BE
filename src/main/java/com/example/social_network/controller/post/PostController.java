@@ -27,6 +27,7 @@ public class PostController {
         return new ResponseEntity<>(postService.save(post), HttpStatus.OK);
     }
 
+
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable Long id, @RequestBody Post post) throws Exception {
         Optional<Post> postOptional = postService.findById(id);
@@ -60,22 +61,26 @@ public class PostController {
     }
 
 
-
-    @GetMapping("userSource/{id}")
+    @GetMapping("user-source/{id}")
     public ResponseEntity<Iterable<Post>> findAllPostWhereIsAcceptedTrue(@PathVariable Long id) {
         return new ResponseEntity<>(this.postService.findPostsOfAcceptedFriends(id), HttpStatus.OK);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletePostByPostId(@PathVariable Long id) {
+        postService.remove(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 
-    // quyền cho phép hiện thị mọi người xem được bài post
-    @GetMapping("/everybody/postId/{postId}/userId/{userId}")
-    public ResponseEntity<List<Post>> findAllByEverybody(@PathVariable Long postId , @PathVariable Long userId){
 
-        List<Post> postList = postService.findByEveryBody(postId , userId);
-        if (!postList.isEmpty()){
-            return new ResponseEntity<>(postList, HttpStatus.OK);
+    @PutMapping("/update-authorized-view/{postId}/authorizedView/{authorizedView}")
+    public ResponseEntity<Post> updateAuthorizedView(@PathVariable Long postId, @PathVariable String authorizedView) {
+        try {
+            Post updatedPost = postService.updateAuthorizedViewByPostId(postId, authorizedView);
+            return ResponseEntity.ok(updatedPost);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 

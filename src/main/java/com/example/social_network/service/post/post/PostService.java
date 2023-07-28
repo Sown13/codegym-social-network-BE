@@ -1,12 +1,10 @@
 package com.example.social_network.service.post.post;
 
 import com.example.social_network.model.post.Post;
-import com.example.social_network.model.post.PostImage;
 import com.example.social_network.repo.post.IPostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +29,7 @@ public class PostService implements IPostService {
 
     @Override
     public void remove(Long id) {
-
+        postRepo.deleteById(id);
     }
 
     @Override
@@ -46,7 +44,12 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public List<Post> findByEveryBody(Long postId, Long userId) {
-        return postRepo.findByEveryBody(postId , userId);
+    public Post updateAuthorizedViewByPostId(Long postId, String authorizedView) {
+        Post post = postRepo.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        post.setAuthorizedView(authorizedView);
+        return postRepo.save(post);
+
     }
+
+
 }
