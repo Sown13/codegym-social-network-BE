@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -70,4 +71,17 @@ public class PostController {
         postService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    @PutMapping("/update-authorized-view/{postId}/authorizedView/{authorizedView}")
+    public ResponseEntity<Post> updateAuthorizedView(@PathVariable Long postId, @PathVariable String authorizedView) {
+        try {
+            Post updatedPost = postService.updateAuthorizedViewByPostId(postId, authorizedView);
+            return ResponseEntity.ok(updatedPost);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
 }
