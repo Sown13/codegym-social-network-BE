@@ -39,4 +39,5 @@ VALUES ('ngohai', 'Thái Bình', 'https://vapa.vn/wp-content/uploads/2022/12/anh
 ('vuongnghien','Trung Quốc','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','vuongnguyen@gmail.com','Vương Sở Nhiên ','Chơi game','123456','01234567890','USER',0),
 ('kieu','Hà Nội','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','thuykieu@gmail.com','Nguyễn Thúy kiều ','Chơi game','123456','01234567890','USER',0),
 ('phongnguyen','Hà Nội','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','nguyenphong@gmail.com','Nguyễn Dương Phong ','Chơi game','123456','01234567890','USER',0),
-('namtran','Hà Nội','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','trannam@gmail.com','Trần Ngọc  Nam ','Chơi game','123456','01234567890','USER',0)
+('namtran','Hà Nội','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','trannam@gmail.com','Trần Ngọc  Nam ','Chơi game','123456','01234567890','USER',0),
+('giangnguyen','Hà Nội','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','giangnguyen@gmail.com','Nguyễn Thị Hương Giang ','Chơi game','123456','01234567890','USER',0)
