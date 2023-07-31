@@ -1,7 +1,6 @@
 package com.example.social_network.service.post.post;
 
 import com.example.social_network.model.post.Post;
-import com.example.social_network.model.post.PostImage;
 import com.example.social_network.repo.post.IPostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,4 +42,14 @@ public class PostService implements IPostService {
     public Iterable<Post> findPostsOfAcceptedFriends(Long id) {
         return postRepo.findPostsOfAcceptedFriends(id);
     }
+
+    @Override
+    public Post updateAuthorizedViewByPostId(Long postId, String authorizedView) {
+        Post post = postRepo.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
+        post.setAuthorizedView(authorizedView);
+        return postRepo.save(post);
+
+    }
+
+
 }

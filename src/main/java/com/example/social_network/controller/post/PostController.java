@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -29,12 +30,12 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable Long id, @RequestBody Post post) throws Exception {
-        Optional<Post> postOptional = postService.findById(id);
-        if (postOptional.isPresent()) {
-            post.setPostId(id);
+        Post postOptional = postService.findById(id).orElse(null);
+        if (postOptional != null) {
             Date now = new Date();
-            post.setDateUpdated(now);
-            postService.save(post);
+            postOptional.setDateUpdated(now);
+            postOptional.setTextContent(post.getTextContent());
+            postService.save(postOptional);
             return new ResponseEntity<>(post, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -70,4 +71,17 @@ public class PostController {
         postService.remove(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
+    @PutMapping("/update-authorized-view/{postId}/authorizedView/{authorizedView}")
+    public ResponseEntity<Post> updateAuthorizedView(@PathVariable Long postId, @PathVariable String authorizedView) {
+        try {
+            Post updatedPost = postService.updateAuthorizedViewByPostId(postId, authorizedView);
+            return ResponseEntity.ok(updatedPost);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
 }

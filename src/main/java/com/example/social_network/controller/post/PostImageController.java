@@ -1,7 +1,6 @@
 package com.example.social_network.controller.post;
 
 import com.example.social_network.dto.post_image_dto.PostImageDTO;
-import com.example.social_network.model.post.Post;
 import com.example.social_network.model.post.PostImage;
 import com.example.social_network.service.post.post_image.IPostImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +35,11 @@ public class PostImageController {
 
         Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         List<PostImage> postImageList = new ArrayList<>();
-        for (int i = 0; i < postImageDTOList.size(); i++) {
+        for (PostImageDTO postImageDTO : postImageDTOList) {
             PostImage postImage = new PostImage();
             postImage.setDateCreated(now);
-            postImage.setPost(postImageDTOList.get(i).getPost());
-            postImage.setImgUrl(postImageDTOList.get(i).getImgUrl());
+            postImage.setPost(postImageDTO.getPost());
+            postImage.setImgUrl(postImageDTO.getImgUrl());
             postImageList.add(postImage);
         }
         return new ResponseEntity<>(postImageService.saveAll(postImageList),HttpStatus.CREATED);

@@ -1,5 +1,6 @@
-package com.example.social_network.model.comment;
+package com.example.social_network.dto.comment_dto;
 
+import com.example.social_network.model.comment.CommentReaction;
 import com.example.social_network.model.post.Post;
 import com.example.social_network.model.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -7,18 +8,13 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.Date;
 import java.util.List;
-
-@Entity
-@Table
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Comment {
+public class CommentDto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long commentId;
@@ -26,9 +22,8 @@ public class Comment {
     private Date dateCreated;
     private Date updateCreated;
     @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore
     private Post post;
+
     @ManyToOne
     private User user;
     @OneToMany(mappedBy = "comment")
