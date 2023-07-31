@@ -44,6 +44,11 @@ public class PostService implements IPostService {
     }
 
     @Override
+    public Iterable<Post> findPostByUserIdAuthorizedView(Long userId) {
+        return postRepo.findPostByUserIdAuthorizedView(userId);
+    }
+
+    @Override
     public Post updateAuthorizedViewByPostId(Long postId, String authorizedView) {
         Post post = postRepo.findById(postId).orElseThrow(() -> new RuntimeException("Post not found"));
         post.setAuthorizedView(authorizedView);

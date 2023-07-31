@@ -15,7 +15,8 @@ public interface IPostRepo extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.user.userId = :userId")
     Iterable<Post> findPostsByUserId(Long userId);
 
-
+    @Query("SELECT p FROM Post p WHERE p.user.userId = :userId AND p.authorizedView = 'public'")
+    Iterable<Post> findPostByUserIdAuthorizedView(@Param("userId") Long userId);
     @Query(value = "select * from social_network.post join social_network.user_friend as uf \n" +
             "on post.user_user_id = uf.target_user_user_id where is_accepted = true and source_user_user_id = :id\n" +
             "union select * from social_network.post join social_network.user_friend as uf \n" +
@@ -23,6 +24,6 @@ public interface IPostRepo extends JpaRepository<Post, Long> {
     Iterable<Post> findPostsOfAcceptedFriends(Long id);
 
     @Modifying
-    @Query(value = "UPDATE Post p SET p.authorizedView = :authorizedView WHERE p.postId = :postId" , nativeQuery = true)
+    @Query(value = "UPDATE Post p SET p.authorizedView = :authorizedView WHERE p.postId = :postId", nativeQuery = true)
     Post updateAuthorizedViewByPostId(Long postId, String authorizedView);
 }

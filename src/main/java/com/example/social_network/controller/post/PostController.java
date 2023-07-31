@@ -59,6 +59,10 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findPostByUserId(@PathVariable Long id) {
         return new ResponseEntity<>(postService.findPostsByUserId(id), HttpStatus.OK);
     }
+    @GetMapping("/user/list/{id}")
+    public ResponseEntity<?>findPostByUserIdAuthorizedView(@PathVariable Long id){
+        return new ResponseEntity<>(postService.findPostByUserIdAuthorizedView(id),HttpStatus.OK);
+    }
 
 
     @GetMapping("user-source/{id}")
