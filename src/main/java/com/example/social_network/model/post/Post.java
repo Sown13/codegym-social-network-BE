@@ -22,7 +22,7 @@ public class Post {
     private String textContent;
     private Date dateCreated;
     private Date dateUpdated;
-    private String authorizedView;
+    private String authorizedView="public";
     @ManyToOne
     private User user;
     @OneToMany(mappedBy = "post")

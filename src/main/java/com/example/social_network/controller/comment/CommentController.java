@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -31,12 +32,19 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    @GetMapping("/list/{id}")
-    private ResponseEntity<?>getAllCommentsByPostId(@PathVariable Long id){
-        List<Comment>listCommentByPost=commentService.getAllCommentsByPostId(id);
-        if(!listCommentByPost.isEmpty()){
-            return new ResponseEntity<>(listCommentByPost,HttpStatus.OK);
+    @GetMapping("")
+    private ResponseEntity<Iterable<Comment>>findAllComment(){
+        Iterable<Comment>commentList=commentService.findAll();
+        return new ResponseEntity<>(commentList,HttpStatus.OK);
+    }
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Comment>deleteCommentById(@PathVariable Long id){
+        Optional<Comment>comment=commentService.findById(id);
+        if(comment.isPresent()){
+            commentService.remove(comment.get().getCommentId());
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 }
