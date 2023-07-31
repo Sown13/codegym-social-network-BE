@@ -102,16 +102,31 @@ public class UserRestController {
 
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody User user, BindingResult result) {
+    private ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody UserId userId, BindingResult result) {
         Optional<User> userOptional = userService.findById(id);
-        if (userOptional.isPresent()) {
+        if (userOptional.isPresent()){
+            User user=userOptional.get();
+
+            user.setAccountName(userId.getAccountName());
+            user.setAvatar(userId.getAvatar());
+            user.setBlock(userId.isBlock());
+            user.setBirthday(userId.getBirthday());
+            user.setAddress(userId.getAddress());
+            user.setBackground(userId.getEmail());
+            user.setEmail(userId.getEmail());
+            user.setFullName(userId.getFullName());
+            user.setHobby(userId.getHobby());
+            user.setCreatedDate(userId.getCreatedDate());
             user.setUserId(id);
-            if (result.hasErrors()) {
-                return ResponseEntity.badRequest().body(user);
+            user.setPassword(user.getPassword());
+
+            if(result.hasErrors()){
+                return ResponseEntity.badRequest().body(result.getAllErrors());
             }
             try {
                 userService.update(user);
-                return new ResponseEntity<>(user, HttpStatus.OK);
+                UserId userIdNew=new UserId(user);
+                return new ResponseEntity<>(userIdNew, HttpStatus.OK);
             } catch (Exception e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
