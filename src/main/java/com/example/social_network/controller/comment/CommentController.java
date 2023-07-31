@@ -1,5 +1,4 @@
 package com.example.social_network.controller.comment;
-
 import com.example.social_network.dto.comment_dto.CommentDto;
 import com.example.social_network.model.comment.Comment;
 import com.example.social_network.service.comment.comment.ICommentService;
@@ -7,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -37,6 +34,15 @@ public class CommentController {
         Iterable<Comment>commentList=commentService.findAll();
         return new ResponseEntity<>(commentList,HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    private ResponseEntity<?>findCommentById(@PathVariable Long id){
+        Optional<Comment>comment=commentService.findById(id);
+        if(comment.isPresent()){
+            return new ResponseEntity<>(comment,HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @DeleteMapping("/{id}")
     private ResponseEntity<Comment>deleteCommentById(@PathVariable Long id){
         Optional<Comment>comment=commentService.findById(id);
@@ -45,6 +51,23 @@ public class CommentController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
+    @PutMapping("/{id}")
+    private ResponseEntity<?> updateComment(@PathVariable Long id, @RequestBody Comment updatedComment) {
+        Optional<Comment> commentOptional = commentService.findById(id);
+        Date now = new Date();
+        if (commentOptional.isPresent()) {
+            Comment existingComment = commentOptional.get();
+            existingComment.setTextContent(updatedComment.getTextContent());
+            existingComment.setUpdateCreated(now);
+            try {
+                commentService.save(existingComment);
+                return ResponseEntity.ok().body(existingComment);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }
