@@ -1,7 +1,6 @@
 package com.example.social_network.controller.user_friend;
 
 import com.example.social_network.dto.dto.CountMutualFriendDTO;
-import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
@@ -110,9 +109,8 @@ public class UserFriendRestController {
     }
 
 
-    // Query s-u || f-u and true ,  đều là bạn bè với nhau
-    @GetMapping("/have-been-friend/{sourceId}/{targetId}")
-    public ResponseEntity<Optional<UserFriend>> getHaveBeenFriends(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+    @GetMapping("/relationship/{sourceId}/{targetId}")
+    public ResponseEntity<Optional<UserFriend>> getRealtionShip(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
         Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
         return new ResponseEntity<>(relationShip, HttpStatus.OK);
     }
