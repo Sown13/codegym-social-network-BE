@@ -31,6 +31,9 @@ public class PostImageController {
     }
     @PostMapping("/list")
     private ResponseEntity<?>addMultiplePostImage(@RequestBody List<PostImageDTO> postImageDTOList) {
+
+        System.out.println(postImageDTOList);
+
         Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         List<PostImage> postImageList = new ArrayList<>();
         for (int i = 0; i < postImageDTOList.size(); i++) {
@@ -62,5 +65,4 @@ public class PostImageController {
       }
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }
