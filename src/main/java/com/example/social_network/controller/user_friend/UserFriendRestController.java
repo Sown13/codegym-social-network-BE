@@ -1,15 +1,16 @@
 package com.example.social_network.controller.user_friend;
 
 import com.example.social_network.dto.dto.CountMutualFriendDTO;
+import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
-import com.example.social_network.model.friend.dto.MutualFriendsDTO;
 import com.example.social_network.model.user_friend.UserFriend;
 import com.example.social_network.service.user_friend.UserFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.example.social_network.model.friend.dto.MutualFriendsDTO;
 
 import java.time.LocalDate;
 import java.time.ZoneId;

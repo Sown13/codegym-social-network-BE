@@ -1,5 +1,6 @@
 package com.example.social_network.controller.user;
 
+import com.example.social_network.dto.dto_user.UserUpdateDTO;
 import com.example.social_network.model.user.User;
 import com.example.social_network.dto.dto_user.UserDTO;
 import com.example.social_network.dto.dto_user.UserId;
@@ -102,16 +103,28 @@ public class UserRestController {
 
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody User user, BindingResult result) {
+    private ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody UserUpdateDTO userUpdateDTO, BindingResult result) {
         Optional<User> userOptional = userService.findById(id);
-        if (userOptional.isPresent()) {
+        if (userOptional.isPresent()){
+            User user=userOptional.get();
+            user.setAccountName(userUpdateDTO.getAccountName());
+            user.setAvatar(userUpdateDTO.getAvatar());
+            user.setBirthday(userUpdateDTO.getBirthday());
+            user.setAddress(userUpdateDTO.getAddress());
+            user.setBackground(userUpdateDTO.getEmail());
+            user.setEmail(userUpdateDTO.getEmail());
+            user.setFullName(userUpdateDTO.getFullName());
+            user.setHobby(userUpdateDTO.getHobby());
             user.setUserId(id);
-            if (result.hasErrors()) {
-                return ResponseEntity.badRequest().body(user);
+            user.setPassword(user.getPassword());
+
+            if(result.hasErrors()){
+                return ResponseEntity.badRequest().body(result.getAllErrors());
             }
             try {
                 userService.update(user);
-                return new ResponseEntity<>(user, HttpStatus.OK);
+                UserUpdateDTO userIdNew=new UserUpdateDTO(user);
+                return new ResponseEntity<>(userIdNew, HttpStatus.OK);
             } catch (Exception e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }

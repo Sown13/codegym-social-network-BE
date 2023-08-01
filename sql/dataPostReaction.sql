@@ -1,4 +1,4 @@
-INSERT INTO post_reaction (reaction_id, date_created, post_post_id, user_user_id, reaction_type)
+INSERT INTO social_network.post_reaction (reaction_id, date_created, post_post_id, user_user_id, reaction_type)
 VALUES
 (1, '2023-07-25', 1, 2, DEFAULT),
 (2, '2023-07-25', 1, 3, DEFAULT),
