@@ -120,10 +120,11 @@ public class UserFriendRestController {
         Iterable<UserFriend> friendList = userFriendService.findAllFriendsByUserId(userId);
         return new ResponseEntity<>(friendList, HttpStatus.OK);
     }
+
     @GetMapping("/mutual-friend/{targetUserId}")
     public ResponseEntity<List<MutualFriendsDTO>> getAcceptedFriendsOfUser(@PathVariable Long targetUserId) {
         List<com.example.social_network.model.friend.dto.MutualFriendsDTO> friends = userFriendService.findAcceptedUserFriendsByTargetUserId(targetUserId);
-        return new ResponseEntity<>(friends,HttpStatus.OK);
+        return new ResponseEntity<>(friends, HttpStatus.OK);
     }
 
 
@@ -134,14 +135,20 @@ public class UserFriendRestController {
     }
 
     @GetMapping("/being-friend/{sourceId}/{targetId}")
-    public ResponseEntity<Optional<UserFriend>> getListFriendsOfUserIdWhereHaveBeenFriend(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
-        Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
-        System.out.println("Thong tin da la ban be chua");
-        System.out.println(relationShip.get().isAccepted());
-        if(relationShip.get().isAccepted() == false) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> getListFriendsOfUserIdWhereHaveBeenFriend(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+        if (targetId == sourceId) {
+            return new ResponseEntity<>(userFriendService.findAllFriendsByUserId(targetId), HttpStatus.OK);
+        } else {
+            Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
+            System.out.println("Thong tin da la ban be chua");
+            System.out.println(relationShip.get().isAccepted());
+            if (relationShip.get().isAccepted() == false) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(relationShip, HttpStatus.OK);
         }
-        return new ResponseEntity<>(relationShip, HttpStatus.OK);
+
+
     }
 
 

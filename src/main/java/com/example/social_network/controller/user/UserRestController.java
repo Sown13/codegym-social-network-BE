@@ -70,7 +70,7 @@ public class UserRestController {
         }
     }
 
-    @PostMapping("/update/{id}")
+    @PutMapping("/update-pass/user/{id}")
     private ResponseEntity<?> updatePassword(@Valid @PathVariable("id") Long id, @RequestBody @Validated UserDTO userDTO, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return new ResponseEntity<>(bindingResult.getAllErrors(), HttpStatus.BAD_REQUEST);
@@ -102,7 +102,7 @@ public class UserRestController {
 
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody User user, BindingResult result) {
+    private ResponseEntity<?> updateUserInformation(@Valid @PathVariable("id") Long id, @RequestBody User user, BindingResult result) {
         Optional<User> userOptional = userService.findById(id);
         if (userOptional.isPresent()) {
             user.setUserId(id);
