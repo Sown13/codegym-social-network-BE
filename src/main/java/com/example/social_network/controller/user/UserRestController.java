@@ -1,5 +1,6 @@
 package com.example.social_network.controller.user;
 
+import com.example.social_network.dto.dto_user.UserUpdateDTO;
 import com.example.social_network.model.user.User;
 import com.example.social_network.dto.dto_user.UserDTO;
 import com.example.social_network.dto.dto_user.UserId;
@@ -102,21 +103,18 @@ public class UserRestController {
 
 
     @PutMapping("/{id}")
-    private ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody UserId userId, BindingResult result) {
+    private ResponseEntity<?> updateUser(@Valid @PathVariable("id") Long id, @RequestBody UserUpdateDTO userUpdateDTO, BindingResult result) {
         Optional<User> userOptional = userService.findById(id);
         if (userOptional.isPresent()){
             User user=userOptional.get();
-
-            user.setAccountName(userId.getAccountName());
-            user.setAvatar(userId.getAvatar());
-            user.setBlock(userId.isBlock());
-            user.setBirthday(userId.getBirthday());
-            user.setAddress(userId.getAddress());
-            user.setBackground(userId.getEmail());
-            user.setEmail(userId.getEmail());
-            user.setFullName(userId.getFullName());
-            user.setHobby(userId.getHobby());
-            user.setCreatedDate(userId.getCreatedDate());
+            user.setAccountName(userUpdateDTO.getAccountName());
+            user.setAvatar(userUpdateDTO.getAvatar());
+            user.setBirthday(userUpdateDTO.getBirthday());
+            user.setAddress(userUpdateDTO.getAddress());
+            user.setBackground(userUpdateDTO.getEmail());
+            user.setEmail(userUpdateDTO.getEmail());
+            user.setFullName(userUpdateDTO.getFullName());
+            user.setHobby(userUpdateDTO.getHobby());
             user.setUserId(id);
             user.setPassword(user.getPassword());
 
@@ -125,7 +123,7 @@ public class UserRestController {
             }
             try {
                 userService.update(user);
-                UserId userIdNew=new UserId(user);
+                UserUpdateDTO userIdNew=new UserUpdateDTO(user);
                 return new ResponseEntity<>(userIdNew, HttpStatus.OK);
             } catch (Exception e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
