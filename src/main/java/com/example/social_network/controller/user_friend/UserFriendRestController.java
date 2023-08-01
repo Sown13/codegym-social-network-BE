@@ -44,7 +44,7 @@ public class UserFriendRestController {
 
     @PostMapping("")
     public ResponseEntity<UserFriend> sendFriendRequest(@RequestBody UserFriend userFriend) {
-        if (userFriendService.findRelationShip(userFriend.getTargetUser().getUserId(), userFriend.getSourceUser().getUserId()) != null) {
+        if (userFriendService.findRelationShip(userFriend.getTargetUser().getUserId(), userFriend.getSourceUser().getUserId()).isPresent()) {
             return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
         } else {
             LocalDate date = LocalDate.now();
