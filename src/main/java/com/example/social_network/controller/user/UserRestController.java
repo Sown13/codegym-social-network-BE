@@ -118,6 +118,13 @@ public class UserRestController {
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
+    @GetMapping("/{sourceUserId}/{targetUserId}/mutual-friends")
+    private ResponseEntity<List<User>> findMutualFriend(@PathVariable Long sourceUserId, @PathVariable Long targetUserId){
+        List<User> mutualFriendList = userService.findMutualFriend(sourceUserId,targetUserId);
+        if(mutualFriendList.isEmpty()){
+            return null;
+        }
+        return new ResponseEntity<>(mutualFriendList,HttpStatus.OK);
+    }
 }
 
