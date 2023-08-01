@@ -17,7 +17,7 @@ public interface IUserFriendRepo extends JpaRepository<UserFriend, Long> {
     @Query("SELECT COUNT(*) FROM UserFriend u WHERE u.isAccepted = true AND u.targetUser = :userId")
     Long countAllByUserFriend(@Param("userId") Long userId);
 
-    @Query("SELECT uf FROM UserFriend uf WHERE uf.sourceUser.userId = :id or uf.targetUser.userId = :id and uf.isAccepted = true")
+    @Query("SELECT uf FROM UserFriend uf WHERE (uf.sourceUser.userId = :id or uf.targetUser.userId = :id) and uf.isAccepted = true")
     Iterable<UserFriend> findUserFriendsAcceptedByUserId(Long id);
 
     @Query(value = "SELECT user_friend.source_user_user_id, user_friend.target_user_user_id, users.account_name, user_friend.is_accepted " +
