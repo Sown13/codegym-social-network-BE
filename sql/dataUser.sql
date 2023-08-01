@@ -1,3 +1,4 @@
+
 INSERT INTO social_network.users (account_name, address,background, avatar, birthday, email, full_name, hobby, password, phone, role, is_block)
 VALUES ('ngohai', 'Thái Bình', 'https://vienthammydiva.vn/wp-content/uploads/2022/05/gai-xinh-han-quoc-2-1.jpg','https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien.jpeg', '1996-02-22', 'hai96@gmail.com', 'Ngô Hoàng Hải', 'học Tiếng', '123456', '012345678', 'USER', 0),
 ('tuanpham','Thái Bình','https://vienthammydiva.vn/wp-content/uploads/2022/05/gai-xinh-han-quoc-29-1.jpg','https://vapa.vn/wp-content/uploads/2022/12/anh-3d-thien-nhien-001.jpg','1197-02-22','tuanpham@gmail.com','Phạm Minh Tuấn','Chơi game','1234567','0124324545','USER',0),
@@ -40,3 +41,4 @@ VALUES ('ngohai', 'Thái Bình', 'https://vienthammydiva.vn/wp-content/uploads/2
 ('phongnguyen','Hà Nội','https://khoinguonsangtao.vn/wp-content/uploads/2022/09/anh-gai-xinh-deo-kinh-ngau.jpg','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','nguyenphong@gmail.com','Nguyễn Dương Phong ','Chơi game','123456','01234567890','USER',0),
 ('namtran','Hà Nội','https://khoinguonsangtao.vn/wp-content/uploads/2022/09/hinh-anh-gai-xinh-deo-kinh-che-mat-ngau-nhat-315x560.jpg','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','trannam@gmail.com','Trần Ngọc  Nam ','Chơi game','123456','01234567890','USER',0),
 ('hungtran','Hà Nội','https://khoinguonsangtao.vn/wp-content/uploads/2022/09/hinh-anh-gai-xinh-deo-kinh-che-mat-ngau-nhat-315x560.jpg','https://vapa.vn/wp-content/uploads/2022/12/anh-dep-3d-ve-thien-nhien-003.jpg','1998-06-04','hungtran132@gmail.com','Trần Ngọc Nam ','Chơi game','123456','01234567890','USER',0)
+

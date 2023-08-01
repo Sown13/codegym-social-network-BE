@@ -8,6 +8,7 @@ public interface IPostService extends IGeneralService<Post> {
     Iterable<Post> findPostsByUserId(Long id);
 
     Iterable<Post> findPostsOfAcceptedFriends(Long id);
+    Iterable<Post>findPostByUserIdAuthorizedView(Long userId);
 
     Post updateAuthorizedViewByPostId( Long postId, String authorizedView);
 }

@@ -30,12 +30,12 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable Long id, @RequestBody Post post) throws Exception {
-        Post postOptional = postService.findById(id).orElse(null);
-        if (postOptional != null) {
+        Optional<Post> postOptional = postService.findById(id);
+        if (postOptional.isPresent()) {
+            post.setPostId(id);
             Date now = new Date();
-            postOptional.setDateUpdated(now);
-            postOptional.setTextContent(post.getTextContent());
-            postService.save(postOptional);
+            post.setDateUpdated(now);
+            postService.save(post);
             return new ResponseEntity<>(post, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -58,6 +58,10 @@ public class PostController {
     @GetMapping("/user/{id}")
     public ResponseEntity<Iterable<Post>> findPostByUserId(@PathVariable Long id) {
         return new ResponseEntity<>(postService.findPostsByUserId(id), HttpStatus.OK);
+    }
+    @GetMapping("/user/list/{id}")
+    public ResponseEntity<?>findPostByUserIdAuthorizedView(@PathVariable Long id){
+        return new ResponseEntity<>(postService.findPostByUserIdAuthorizedView(id),HttpStatus.OK);
     }
 
 

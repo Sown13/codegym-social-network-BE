@@ -1,6 +1,7 @@
 package com.example.social_network.controller.user_friend;
 
 import com.example.social_network.dto.dto.CountMutualFriendDTO;
+import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
 import com.example.social_network.dto.dto.SourceUserFriendDTO;
 import com.example.social_network.dto.dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
@@ -58,22 +59,6 @@ public class UserFriendRestController {
         }
     }
 
-//    @PostMapping("/{sourceId}/{targetId}")
-//    public ResponseEntity<UserFriend> sendFriendRequestBySrcAndTarget(@PathVariable("sourceId") Long sourceId, @PathVariable("targetId") Long targetId){
-//        LocalDate date = LocalDate.now();
-//        Date utilDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-//        UserFriend userFriend = new UserFriend();
-//        userFriend.setDateRequested(utilDate);
-//        userFriend.setAccepted(false);
-//        userFriend.setFriendType("Friend");
-//        userFriend.setSourceUser(new User(sourceId));
-//        userFriend.setTargetUser(new User(targetId));
-//        UserFriend savedUserFriend = userFriendService.save(userFriend);
-//        if (savedUserFriend != null) {
-//            return new ResponseEntity<>(savedUserFriend, HttpStatus.CREATED);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Optional<UserFriend>> acceptFriendRequest(@PathVariable("id") Long id) {
@@ -125,11 +110,11 @@ public class UserFriendRestController {
         return new ResponseEntity<>(friendList, HttpStatus.OK);
     }
 
-    @GetMapping("/mutual-friend/{targetUserId}")
-    public ResponseEntity<List<MutualFriendsDTO>> getAcceptedFriendsOfUser(@PathVariable Long targetUserId) {
-        List<com.example.social_network.model.friend.dto.MutualFriendsDTO> friends = userFriendService.findAcceptedUserFriendsByTargetUserId(targetUserId);
-        return new ResponseEntity<>(friends, HttpStatus.OK);
-    }
+//    @GetMapping("/mutual-friend/{targetUserId}")
+//    public ResponseEntity<List<MutualFriendsDTO>> getAcceptedFriendsOfUser(@PathVariable Long targetUserId) {
+//        List<com.example.social_network.model.friend.dto.MutualFriendsDTO> friends = userFriendService.findAcceptedUserFriendsByTargetUserId(targetUserId);
+//        return new ResponseEntity<>(friends, HttpStatus.OK);
+//    }
 
 
     @GetMapping("/count-accepted-friends/{targetUserId}")

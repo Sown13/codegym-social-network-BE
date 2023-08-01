@@ -19,5 +19,5 @@ public interface IUserService extends IGeneralService<User> {
 
 //    List<User> findAllFriendsByUserId(Long userId);
 
-
+    List<User> findMutualFriend(Long sourceUserId, Long targetUserId);
 }
