@@ -43,15 +43,19 @@ public class UserFriendRestController {
 
     @PostMapping("")
     public ResponseEntity<UserFriend> sendFriendRequest(@RequestBody UserFriend userFriend) {
-        LocalDate date = LocalDate.now();
-        Date utilDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-        userFriend.setDateRequested(utilDate);
-        userFriend.setAccepted(false);
-        UserFriend savedUserFriend = userFriendService.save(userFriend);
-        if (savedUserFriend != null) {
-            return new ResponseEntity<>(savedUserFriend, HttpStatus.CREATED);
+        if (userFriendService.findRelationShip(userFriend.getTargetUser().getUserId(), userFriend.getSourceUser().getUserId()).isPresent()) {
+            return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
+        } else {
+            LocalDate date = LocalDate.now();
+            Date utilDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            userFriend.setDateRequested(utilDate);
+            userFriend.setAccepted(false);
+            UserFriend savedUserFriend = userFriendService.save(userFriend);
+            if (savedUserFriend != null) {
+                return new ResponseEntity<>(savedUserFriend, HttpStatus.CREATED);
+            }
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 //    @PostMapping("/{sourceId}/{targetId}")
