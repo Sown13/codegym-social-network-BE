@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -17,6 +18,17 @@ import java.util.List;
 public class CommentController {
     @Autowired
     private ICommentService commentService;
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Comment>> findById(@PathVariable Long id){
+        Optional<Comment> commentOptional = commentService.findById(id);
+        if (commentOptional.isPresent()){
+            return new ResponseEntity<>(commentOptional , HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("")
     public ResponseEntity<Comment> createComment(@RequestBody CommentDto commentDto) {
         Comment comment = new Comment();
@@ -31,11 +43,12 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @GetMapping("/list/{id}")
-    private ResponseEntity<?>getAllCommentsByPostId(@PathVariable Long id){
-        List<Comment>listCommentByPost=commentService.getAllCommentsByPostId(id);
-        if(!listCommentByPost.isEmpty()){
-            return new ResponseEntity<>(listCommentByPost,HttpStatus.OK);
+    private ResponseEntity<?> getAllCommentsByPostId(@PathVariable Long id) {
+        List<Comment> listCommentByPost = commentService.getAllCommentsByPostId(id);
+        if (!listCommentByPost.isEmpty()) {
+            return new ResponseEntity<>(listCommentByPost, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

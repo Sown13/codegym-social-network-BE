@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -35,10 +37,7 @@ public class PostReactionController {
 
     // thêm like vào bảng PostReaction
     @PostMapping("/add/post/{postId}/user/{userId}")
-    public ResponseEntity<List<PostReaction>> addToLikeBoard(@RequestBody PostReaction postReaction,
-                                                                 @PathVariable Long postId,
-                                                                 @PathVariable Long userId) throws Exception {
-        postReaction.setDateCreated(new Date());
+    public ResponseEntity<List<PostReaction>> addToLikeBoard(@PathVariable Long postId, @PathVariable Long userId) throws Exception {
 
         List<PostReaction> postReactionIterable = postReactionService.findByPostIdAndUserId(postId, userId);
         if (!postReactionIterable.isEmpty()) {
@@ -56,6 +55,10 @@ public class PostReactionController {
 
             newPostReaction.setUser(user);
             newPostReaction.setPost(post);
+
+            LocalDateTime now = LocalDateTime.now();
+            Date dateCreated = Date.from(now.atZone(ZoneId.systemDefault()).toInstant());
+            newPostReaction.setDateCreated(dateCreated);
 
             newPostReaction = postReactionService.save(newPostReaction);
 
