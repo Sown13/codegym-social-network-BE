@@ -1,11 +1,13 @@
 package com.example.social_network.service.user_friend;
 
-import com.example.social_network.dto.dto.CountMutualFriendDTO;
-import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
-import com.example.social_network.dto.dto.SourceUserFriendDTO;
-import com.example.social_network.dto.dto.TargetUserFriendDTO;
+import com.example.social_network.dto.user_friend_dto.CountMutualFriendDTO;
+import com.example.social_network.dto.user_friend_dto.SourceUserFriendDTO;
+import com.example.social_network.dto.user_friend_dto.TargetUserFriendDTO;
+import com.example.social_network.model.user.User;
 import com.example.social_network.model.user_friend.UserFriend;
+import com.example.social_network.repo.user.IUserRepo;
 import com.example.social_network.repo.user_friend.IUserFriendRepo;
+import com.example.social_network.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.social_network.model.friend.dto.MutualFriendsDTO;
@@ -18,41 +20,43 @@ import java.util.Optional;
 public class UserFriendService implements IUserFriendService {
 
     @Autowired
-    IUserFriendRepo IUserFriendRepo;
+    IUserFriendRepo userFriendRepo;
+    @Autowired
+    IUserRepo userRepo;
 
     @Override
     public Iterable<UserFriend> findAll() {
-        return IUserFriendRepo.findAll();
+        return userFriendRepo.findAll();
     }
 
     @Override
     public Optional<UserFriend> findById(Long id) {
-        return IUserFriendRepo.findById(id);
+        return userFriendRepo.findById(id);
     }
 
     @Override
     public UserFriend save(UserFriend userFriend) {
-        return IUserFriendRepo.save(userFriend);
+        return userFriendRepo.save(userFriend);
     }
 
     @Override
     public void remove(Long id) {
-        IUserFriendRepo.deleteById(id);
+        userFriendRepo.deleteById(id);
     }
 
     @Override
     public Iterable<UserFriend> findAllFriendsByUserId(Long id) {
-        return IUserFriendRepo.findUserFriendsAcceptedByUserId(id);
+        return userFriendRepo.findUserFriendsAcceptedByUserId(id);
     }
 
     @Override
     public Long countFriend(Long id) {
-        return IUserFriendRepo.countAllByUserFriend(id);
+        return userFriendRepo.countAllByUserFriend(id);
     }
 
     @Override
     public List<SourceUserFriendDTO> findUserFriendByUserFriendId(Long id) {
-        List<Object[]> results = IUserFriendRepo.findUserFriendByUserFriendId(id);
+        List<Object[]> results = userFriendRepo.findUserFriendByUserFriendId(id);
         List<SourceUserFriendDTO> userFriends = new ArrayList<>();
 
         for (Object[] result : results) {
@@ -68,7 +72,7 @@ public class UserFriendService implements IUserFriendService {
 
     @Override
     public List<TargetUserFriendDTO> findUserFriendByTargetUser(Long id) {
-        List<Object[]> targetResults = IUserFriendRepo.findUserFriendByTargetUser(id);
+        List<Object[]> targetResults = userFriendRepo.findUserFriendByTargetUser(id);
         List<TargetUserFriendDTO> targetUserFriends = new ArrayList<>();
 
         for (Object[] targetResult : targetResults) {
@@ -84,13 +88,13 @@ public class UserFriendService implements IUserFriendService {
 
     @Override
     public Optional<UserFriend> findRelationShip(Long targetId, Long sourceId) {
-        Optional<UserFriend> relationShip = IUserFriendRepo.findRelationShip(targetId, sourceId);
+        Optional<UserFriend> relationShip = userFriendRepo.findRelationShip(targetId, sourceId);
         return relationShip;
     }
 
     @Override
     public List<MutualFriendsDTO> findAcceptedUserFriendsByTargetUserId(Long targetUserId1) {
-        List<Object[]> MutualFriendResults = IUserFriendRepo.findAcceptedUserFriendsByTargetUserId(targetUserId1);
+        List<Object[]> MutualFriendResults = userFriendRepo.findAcceptedUserFriendsByTargetUserId(targetUserId1);
         List<MutualFriendsDTO> mutualFriendsDTOS = new ArrayList<>();
 
         for (Object[] MutualFriendResult : MutualFriendResults) {
@@ -105,9 +109,19 @@ public class UserFriendService implements IUserFriendService {
 
     @Override
     public CountMutualFriendDTO countAcceptedFriendsByUserId(Long userId) {
-        Long count = IUserFriendRepo.countAcceptedFriendsByUserId(userId);
+        Long count = userFriendRepo.countAcceptedFriendsByUserId(userId);
         return new CountMutualFriendDTO(count);
     }
 
+    @Override
+    public Iterable<UserFriend> findAllFriendRequestSentByUserId(Long id) {
+        User user = userRepo.findById(id).orElse(null);
+        return userFriendRepo.findUserFriendsBySourceUser(user);
+    }
 
+    @Override
+    public Iterable<UserFriend> findAllFriendRequestReceiveByUserId(Long id) {
+        User user = userRepo.findById(id).orElse(null);
+        return userFriendRepo.findUserFriendsByTargetUser(user);
+    }
 }

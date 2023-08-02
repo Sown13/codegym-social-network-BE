@@ -1,4 +1,4 @@
-package com.example.social_network.dto.dto_user;
+package com.example.social_network.dto.user_dto;
 
 import com.example.social_network.model.user.User;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserUpdateDTO {
+public class UserId {
     private Long userId;
     private String accountName;
     private String email;
@@ -19,11 +19,13 @@ public class UserUpdateDTO {
     private Date birthday;
     private String avatar;
     private String hobby;
+    private String role;
     private String address;
+    private Date createdDate;
     private String background;
+    private boolean isBlock=false;
 
-
-    public UserUpdateDTO(User user) {
+    public UserId(User user) {
         this.userId = user.getUserId();
         this.accountName = user.getAccountName();
         this.email = user.getEmail();
@@ -32,7 +34,10 @@ public class UserUpdateDTO {
         this.birthday = user.getBirthday();
         this.avatar = user.getAvatar();
         this.hobby = user.getHobby();
+        this.role = user.getRole();
         this.address = user.getAddress();
+        this.createdDate = user.getCreatedDate();
         this.background = user.getBackground();
+        this.isBlock=user.isBlock();
     }
 }

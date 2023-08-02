@@ -1,21 +1,18 @@
 package com.example.social_network.controller.user_friend;
 
-import com.example.social_network.dto.dto.CountMutualFriendDTO;
-import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
-import com.example.social_network.dto.dto.SourceUserFriendDTO;
-import com.example.social_network.dto.dto.TargetUserFriendDTO;
+import com.example.social_network.dto.user_friend_dto.CountMutualFriendDTO;
+import com.example.social_network.dto.user_friend_dto.SourceUserFriendDTO;
+import com.example.social_network.dto.user_friend_dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
 import com.example.social_network.service.user_friend.UserFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.example.social_network.model.friend.dto.MutualFriendsDTO;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -89,11 +86,21 @@ public class UserFriendRestController {
         Iterable<SourceUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByUserFriendId(id);
         return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
     }
+    @GetMapping("/user/{id}/v2/friend-request-sent")
+    public ResponseEntity<Iterable<UserFriend>> findAllFriendRequestSentByUserId(@PathVariable Long id) {
+        Iterable<UserFriend> userFriendIterable = userFriendService.findAllFriendRequestSentByUserId(id);
+        return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
+    }
 
     // t-u and false , nhận  lời mời gửi đến từ s-u
     @GetMapping("/user/{id}/friend-request-receive")
     public ResponseEntity<Iterable<TargetUserFriendDTO>> targetSendFriend(@PathVariable Long id) {
         Iterable<TargetUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByTargetUser(id);
+        return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
+    }
+    @GetMapping("/user/{id}/v2/friend-request-receive")
+    public ResponseEntity<Iterable<UserFriend>> findAllFriendRequestReceiveByUserId(@PathVariable Long id) {
+        Iterable<UserFriend> userFriendIterable = userFriendService.findAllFriendRequestReceiveByUserId(id);
         return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
     }
 

@@ -1,6 +1,5 @@
 package com.example.social_network.controller.post;
 
-import com.example.social_network.dto.dto.PostReactionDTO;
 import com.example.social_network.model.post.Post;
 import com.example.social_network.model.post.PostReaction;
 import com.example.social_network.model.user.User;
