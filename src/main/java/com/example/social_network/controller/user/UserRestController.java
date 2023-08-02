@@ -111,7 +111,7 @@ public class UserRestController {
             user.setAvatar(userUpdateDTO.getAvatar());
             user.setBirthday(userUpdateDTO.getBirthday());
             user.setAddress(userUpdateDTO.getAddress());
-            user.setBackground(userUpdateDTO.getEmail());
+            user.setBackground(userUpdateDTO.getBackground());
             user.setEmail(userUpdateDTO.getEmail());
             user.setFullName(userUpdateDTO.getFullName());
             user.setHobby(userUpdateDTO.getHobby());
