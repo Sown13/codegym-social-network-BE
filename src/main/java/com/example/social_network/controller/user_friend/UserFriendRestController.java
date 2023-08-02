@@ -131,14 +131,20 @@ public class UserFriendRestController {
     }
 
     @GetMapping("/being-friend/{sourceId}/{targetId}")
-    public ResponseEntity<Optional<UserFriend>> getListFriendsOfUserIdWhereHaveBeenFriend(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
-        Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
-        System.out.println("Thong tin da la ban be chua");
-        System.out.println(relationShip.get().isAccepted());
-        if (relationShip.get().isAccepted() == false) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> getListFriendsOfUserIdWhereHaveBeenFriend(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+        if (targetId == sourceId) {
+            return new ResponseEntity<>(userFriendService.findAllFriendsByUserId(targetId), HttpStatus.OK);
+        } else {
+            Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
+            System.out.println("Thong tin da la ban be chua");
+            System.out.println(relationShip.get().isAccepted());
+            if (relationShip.get().isAccepted() == false) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(relationShip, HttpStatus.OK);
         }
-        return new ResponseEntity<>(relationShip, HttpStatus.OK);
+
+
     }
 
 
