@@ -30,12 +30,12 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updatePost(@PathVariable Long id, @RequestBody Post post) throws Exception {
-        Optional<Post> postOptional = postService.findById(id);
-        if (postOptional.isPresent()) {
-            post.setPostId(id);
+        Post postOptional = postService.findById(id).orElse(null);
+        if (postOptional != null) {
             Date now = new Date();
-            post.setDateUpdated(now);
-            postService.save(post);
+            postOptional.setDateUpdated(now);
+            postOptional.setTextContent(post.getTextContent());
+            postService.save(postOptional);
             return new ResponseEntity<>(post, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
