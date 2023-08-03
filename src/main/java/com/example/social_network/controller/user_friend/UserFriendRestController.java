@@ -129,9 +129,12 @@ public class UserFriendRestController {
             return new ResponseEntity<>(userFriendService.findAllFriendsByUserId(targetId), HttpStatus.OK);
         } else {
             Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
+            if(relationShip.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
             System.out.println("Thong tin da la ban be chua");
             System.out.println(relationShip.get().isAccepted());
-            if (relationShip.get().isAccepted() == false) {
+            if (!relationShip.get().isAccepted()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
             return new ResponseEntity<>(relationShip, HttpStatus.OK);
@@ -141,15 +144,18 @@ public class UserFriendRestController {
     }
 
     @GetMapping("/check-relationship/{sourceId}/{targetId}")
-    public ResponseEntity<Optional<UserFriend>> test(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+    public ResponseEntity<Optional<UserFriend>> checkRelationShip(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
         if (targetId.equals(sourceId)) {
             return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
+            if (relationShip.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            }
+            if (relationShip.get().isAccepted()) {
+                return new ResponseEntity<>(relationShip, HttpStatus.OK);
+            } else return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
         }
-        Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
-        if (relationShip.get().isAccepted()) {
-            return new ResponseEntity<>(relationShip, HttpStatus.OK);
-        } else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
 
 }
