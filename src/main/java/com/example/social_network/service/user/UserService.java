@@ -1,6 +1,6 @@
 package com.example.social_network.service.user;
 
-import com.example.social_network.dto.dto_user.UserId;
+import com.example.social_network.dto.user_dto.UserId;
 import com.example.social_network.model.user.User;
 import com.example.social_network.model.user_friend.UserFriend;
 import com.example.social_network.repo.user.IUserRepo;

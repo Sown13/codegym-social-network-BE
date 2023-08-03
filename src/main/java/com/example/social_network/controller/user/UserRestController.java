@@ -1,9 +1,9 @@
 package com.example.social_network.controller.user;
 
-import com.example.social_network.dto.dto_user.UserUpdateDTO;
+import com.example.social_network.dto.user_dto.UserUpdateDTO;
 import com.example.social_network.model.user.User;
-import com.example.social_network.dto.dto_user.UserDTO;
-import com.example.social_network.dto.dto_user.UserId;
+import com.example.social_network.dto.user_dto.UserDTO;
+import com.example.social_network.dto.user_dto.UserId;
 import com.example.social_network.service.user.IUserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,9 +1,8 @@
 package com.example.social_network.service.user_friend;
 
-import com.example.social_network.dto.dto.CountMutualFriendDTO;
-import com.example.social_network.dto.dto.HaveBeenFriendsDTO;
-import com.example.social_network.dto.dto.SourceUserFriendDTO;
-import com.example.social_network.dto.dto.TargetUserFriendDTO;
+import com.example.social_network.dto.user_friend_dto.CountMutualFriendDTO;
+import com.example.social_network.dto.user_friend_dto.SourceUserFriendDTO;
+import com.example.social_network.dto.user_friend_dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
 import com.example.social_network.service.IGeneralService;
 import org.springframework.data.repository.query.Param;
@@ -26,5 +25,6 @@ public interface IUserFriendService extends IGeneralService<UserFriend> {
 
     CountMutualFriendDTO countAcceptedFriendsByUserId(@Param("userId") Long userId);
 
-
+    Iterable<UserFriend> findAllFriendRequestSentByUserId(Long id);
+    Iterable<UserFriend> findAllFriendRequestReceiveByUserId(Long id);
 }
