@@ -140,6 +140,17 @@ public class UserFriendRestController {
 
     }
 
+    @GetMapping("/check-relationship/{sourceId}/{targetId}")
+    public ResponseEntity<Optional<UserFriend>> test(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+        if (targetId.equals(sourceId)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
+        if (relationShip.get().isAccepted()) {
+            return new ResponseEntity<>(relationShip, HttpStatus.OK);
+        } else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+    }
 
 }
 
