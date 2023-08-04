@@ -1,5 +1,6 @@
 package com.example.social_network.repo.user_friend;
 
+import com.example.social_network.model.user.User;
 import com.example.social_network.model.user_friend.UserFriend;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,7 +18,7 @@ public interface IUserFriendRepo extends JpaRepository<UserFriend, Long> {
     @Query("SELECT COUNT(*) FROM UserFriend u WHERE u.isAccepted = true AND u.targetUser = :userId")
     Long countAllByUserFriend(@Param("userId") Long userId);
 
-    @Query("SELECT uf FROM UserFriend uf WHERE uf.sourceUser.userId = :id or uf.targetUser.userId = :id and uf.isAccepted = true")
+    @Query("SELECT uf FROM UserFriend uf WHERE (uf.sourceUser.userId = :id or uf.targetUser.userId = :id) and uf.isAccepted = true")
     Iterable<UserFriend> findUserFriendsAcceptedByUserId(Long id);
 
     @Query(value = "SELECT user_friend.source_user_user_id, user_friend.target_user_user_id, users.account_name, user_friend.is_accepted " +
@@ -54,4 +55,6 @@ public interface IUserFriendRepo extends JpaRepository<UserFriend, Long> {
             "WHERE uf.is_accepted = true AND uf.target_user_user_id = :userId", nativeQuery = true)
     Long countAcceptedFriendsByUserId(@Param("userId") Long userId);
 
+    Iterable<UserFriend> findUserFriendsBySourceUser(User sourceUser);
+    Iterable<UserFriend> findUserFriendsByTargetUser(User targetUser);
 }
