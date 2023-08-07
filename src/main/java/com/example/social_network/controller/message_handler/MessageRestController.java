@@ -1,6 +1,8 @@
 package com.example.social_network.controller.message_handler;
 
-import com.example.social_network.config.Message;
+
+import com.example.social_network.dto.message.MessageDTO;
+import com.example.social_network.model.message.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
@@ -18,13 +20,13 @@ public class MessageRestController {
 
     @MessageMapping("/message")
     @SendTo("/chatroom/public")
-    private Message receivePublicMessage(@Payload Message message){
+    private MessageDTO receivePublicMessage(@Payload MessageDTO message){
         return message;
     }
 
     @MessageMapping("/private-message")
-    private Message receivePrivateMessage(@Payload Message message){
-        simpMessagingTemplate.convertAndSendToUser(message.getReceiverName(), "/private",message);
+    private MessageDTO receivePrivateMessage(@Payload MessageDTO message){
+        simpMessagingTemplate.convertAndSendToUser(message.getGroup().getGroupId().toString(), "/private",message);
 //        => user/name/private/
         return message;
     }
