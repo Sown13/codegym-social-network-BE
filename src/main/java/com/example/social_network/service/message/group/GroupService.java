@@ -14,21 +14,22 @@ public class GroupService implements IGroupService{
 
     @Override
     public Iterable<Group> findAll() {
-        return null;
+        return groupRepo.findAll();
     }
 
     @Override
     public Optional<Group> findById(Long id) {
-        return Optional.empty();
+        return groupRepo.findById(id);
     }
 
     @Override
     public Group save(Group group) throws Exception {
-        return null;
+        return groupRepo.save(group);
     }
 
     @Override
     public void remove(Long id) {
+        groupRepo.deleteById(id);
 
     }
 }
