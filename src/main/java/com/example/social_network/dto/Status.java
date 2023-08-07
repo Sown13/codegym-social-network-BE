@@ -1,4 +1,4 @@
-package com.example.social_network.dto.message;
+package com.example.social_network.dto;
 
 public enum Status {
     JOIN,

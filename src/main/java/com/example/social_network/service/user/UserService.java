@@ -153,4 +153,9 @@ public class UserService implements IUserService {
         }
         return mutualFriend;
     }
+
+    @Override
+    public List<User> findUsersByGroupId(Long id) {
+        return userRepo.findUsersByGroupId(id);
+    }
 }
