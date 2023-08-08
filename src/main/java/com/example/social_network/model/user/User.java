@@ -43,4 +43,7 @@ public class User {
     private String background;
     private boolean isBlock=false;
 
+    public User(Long userId) {
+        this.userId = userId;
+    }
 }

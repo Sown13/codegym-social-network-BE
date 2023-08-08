@@ -26,4 +26,7 @@ public class Group {
     @ManyToOne
     private User owner;
 
+    public Group(Long groupId) {
+        this.groupId = groupId;
+    }
 }

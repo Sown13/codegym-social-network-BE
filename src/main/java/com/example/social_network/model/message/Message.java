@@ -92,4 +92,5 @@ public class Message {
     public void setFiles(List<File> files) {
         this.files = files;
     }
+
 }
