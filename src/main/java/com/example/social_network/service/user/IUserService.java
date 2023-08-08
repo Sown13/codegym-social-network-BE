@@ -11,6 +11,7 @@ public interface IUserService extends IGeneralService<User> {
     List<User> findAllUsersByAccount(String account);
 
     Optional<User> findByAccountName(String username);
+    Optional<User> findByEmail(String username);
      boolean checkPassword(User user, String password);
     User update( User user);
 
@@ -20,4 +21,5 @@ public interface IUserService extends IGeneralService<User> {
 //    List<User> findAllFriendsByUserId(Long userId);
 
     List<User> findMutualFriend(Long sourceUserId, Long targetUserId);
+    List<User> findUsersByGroupId(Long id);
 }

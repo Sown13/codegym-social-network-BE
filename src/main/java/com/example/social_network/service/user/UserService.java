@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService {
+ public class UserService implements IUserService {
 
     @Autowired
     private IUserRepo userRepo;
@@ -93,6 +93,11 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepo.findUsersByEmail(email);
+    }
+
+    @Override
     public boolean checkPassword(User user, String password) {
         return user.getPassword().equals(password);
     }
@@ -152,5 +157,10 @@ public class UserService implements IUserService {
             mutualFriend.add(userRepo.findById(listUserId.get(i)).get());
         }
         return mutualFriend;
+    }
+
+    @Override
+    public List<User> findUsersByGroupId(Long id) {
+        return userRepo.findUsersByGroupId(id);
     }
 }

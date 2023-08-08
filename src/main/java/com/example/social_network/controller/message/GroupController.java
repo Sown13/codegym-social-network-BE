@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.Optional;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin("*")
@@ -51,5 +54,10 @@ public class GroupController {
             return new ResponseEntity<>(updatedGroup, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?> findPostById(@PathVariable Long id) {
+        return new ResponseEntity<>(groupService.findGroupsByUserId(id), HttpStatus.OK);
     }
 }

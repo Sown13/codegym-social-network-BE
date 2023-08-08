@@ -1,10 +1,12 @@
 package com.example.social_network.service.message.group;
 
 import com.example.social_network.model.message.Group;
+import com.example.social_network.model.user.User;
 import com.example.social_network.repo.message.IGroupRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +33,10 @@ public class GroupService implements IGroupService{
     public void remove(Long id) {
         groupRepo.deleteById(id);
 
+    }
+
+    @Override
+    public List<Group> findGroupsByUserId(Long userId) {
+        return groupRepo.findGroupsByUserId(userId);
     }
 }
