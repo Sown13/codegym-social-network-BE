@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -31,12 +31,45 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-    @GetMapping("/list/{id}")
-    private ResponseEntity<?>getAllCommentsByPostId(@PathVariable Long id){
-        List<Comment>listCommentByPost=commentService.getAllCommentsByPostId(id);
-        if(!listCommentByPost.isEmpty()){
-            return new ResponseEntity<>(listCommentByPost,HttpStatus.OK);
+    @GetMapping("")
+    private ResponseEntity<Iterable<Comment>>findAllComment(){
+        Iterable<Comment>commentList=commentService.findAll();
+        return new ResponseEntity<>(commentList,HttpStatus.OK);
+    }
+    @GetMapping("/{id}")
+    private ResponseEntity<?>findCommentById(@PathVariable Long id){
+        Optional<Comment>comment=commentService.findById(id);
+        if(comment.isPresent()){
+            return new ResponseEntity<>(comment,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @DeleteMapping("/{id}")
+    private ResponseEntity<Comment>deleteCommentById(@PathVariable Long id){
+        Optional<Comment>comment=commentService.findById(id);
+        if(comment.isPresent()){
+            commentService.remove(comment.get().getCommentId());
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @PutMapping("/{id}")
+    private ResponseEntity<?> updateComment(@PathVariable Long id, @RequestBody Comment updatedComment) {
+        Optional<Comment> commentOptional = commentService.findById(id);
+        Date now = new Date();
+        if (commentOptional.isPresent()) {
+            Comment existingComment = commentOptional.get();
+            existingComment.setTextContent(updatedComment.getTextContent());
+            existingComment.setUpdateCreated(now);
+            try {
+                commentService.save(existingComment);
+                return ResponseEntity.ok().body(existingComment);
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            }
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
 }

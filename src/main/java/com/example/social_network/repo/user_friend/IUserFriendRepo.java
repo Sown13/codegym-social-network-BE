@@ -1,5 +1,6 @@
 package com.example.social_network.repo.user_friend;
 
+import com.example.social_network.model.user.User;
 import com.example.social_network.model.user_friend.UserFriend;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -54,4 +55,6 @@ public interface IUserFriendRepo extends JpaRepository<UserFriend, Long> {
             "WHERE uf.is_accepted = true AND uf.target_user_user_id = :userId", nativeQuery = true)
     Long countAcceptedFriendsByUserId(@Param("userId") Long userId);
 
+    Iterable<UserFriend> findUserFriendsBySourceUser(User sourceUser);
+    Iterable<UserFriend> findUserFriendsByTargetUser(User targetUser);
 }

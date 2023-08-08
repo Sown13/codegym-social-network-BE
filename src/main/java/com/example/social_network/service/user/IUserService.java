@@ -1,7 +1,7 @@
 package com.example.social_network.service.user;
 
 import com.example.social_network.model.user.User;
-import com.example.social_network.dto.dto_user.UserId;
+import com.example.social_network.dto.user_dto.UserId;
 import com.example.social_network.service.IGeneralService;
 
 import java.util.List;
@@ -20,5 +20,6 @@ public interface IUserService extends IGeneralService<User> {
 
 //    List<User> findAllFriendsByUserId(Long userId);
 
-
+    List<User> findMutualFriend(Long sourceUserId, Long targetUserId);
+    List<User> findUsersByGroupId(Long id);
 }

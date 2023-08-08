@@ -20,7 +20,7 @@ public class CommentService implements ICommentService{
 
     @Override
     public Optional<Comment> findById(Long id) {
-        return Optional.empty();
+        return commentRepo.findById(id);
     }
 
     @Override
@@ -30,6 +30,7 @@ public class CommentService implements ICommentService{
 
     @Override
     public void remove(Long id) {
+        commentRepo.deleteById(id);
 
     }
 

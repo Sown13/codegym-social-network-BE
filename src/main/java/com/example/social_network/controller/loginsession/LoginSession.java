@@ -1,7 +1,7 @@
 package com.example.social_network.controller.loginsession;
 
 import com.example.social_network.model.user.User;
-import com.example.social_network.dto.dto_user.UserLoginDTO;
+import com.example.social_network.dto.user_dto.UserLoginDTO;
 import com.example.social_network.service.user.IUserService;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;

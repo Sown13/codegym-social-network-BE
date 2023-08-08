@@ -1,9 +1,8 @@
 package com.example.social_network.controller.user_friend;
 
-import com.example.social_network.dto.dto.CountMutualFriendDTO;
-import com.example.social_network.dto.dto.SourceUserFriendDTO;
-import com.example.social_network.dto.dto.TargetUserFriendDTO;
-import com.example.social_network.model.friend.dto.MutualFriendsDTO;
+import com.example.social_network.dto.user_friend_dto.CountMutualFriendDTO;
+import com.example.social_network.dto.user_friend_dto.SourceUserFriendDTO;
+import com.example.social_network.dto.user_friend_dto.TargetUserFriendDTO;
 import com.example.social_network.model.user_friend.UserFriend;
 import com.example.social_network.service.user_friend.UserFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -43,7 +41,7 @@ public class UserFriendRestController {
 
     @PostMapping("")
     public ResponseEntity<UserFriend> sendFriendRequest(@RequestBody UserFriend userFriend) {
-        if (userFriendService.findRelationShip(userFriend.getTargetUser().getUserId(), userFriend.getSourceUser().getUserId()) != null) {
+        if (userFriendService.findRelationShip(userFriend.getTargetUser().getUserId(), userFriend.getSourceUser().getUserId()).isPresent()) {
             return new ResponseEntity<>(HttpStatus.ALREADY_REPORTED);
         } else {
             LocalDate date = LocalDate.now();
@@ -58,22 +56,6 @@ public class UserFriendRestController {
         }
     }
 
-//    @PostMapping("/{sourceId}/{targetId}")
-//    public ResponseEntity<UserFriend> sendFriendRequestBySrcAndTarget(@PathVariable("sourceId") Long sourceId, @PathVariable("targetId") Long targetId){
-//        LocalDate date = LocalDate.now();
-//        Date utilDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-//        UserFriend userFriend = new UserFriend();
-//        userFriend.setDateRequested(utilDate);
-//        userFriend.setAccepted(false);
-//        userFriend.setFriendType("Friend");
-//        userFriend.setSourceUser(new User(sourceId));
-//        userFriend.setTargetUser(new User(targetId));
-//        UserFriend savedUserFriend = userFriendService.save(userFriend);
-//        if (savedUserFriend != null) {
-//            return new ResponseEntity<>(savedUserFriend, HttpStatus.CREATED);
-//        }
-//        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Optional<UserFriend>> acceptFriendRequest(@PathVariable("id") Long id) {
@@ -104,11 +86,21 @@ public class UserFriendRestController {
         Iterable<SourceUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByUserFriendId(id);
         return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
     }
+    @GetMapping("/user/{id}/v2/friend-request-sent")
+    public ResponseEntity<Iterable<UserFriend>> findAllFriendRequestSentByUserId(@PathVariable Long id) {
+        Iterable<UserFriend> userFriendIterable = userFriendService.findAllFriendRequestSentByUserId(id);
+        return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
+    }
 
     // t-u and false , nhận  lời mời gửi đến từ s-u
     @GetMapping("/user/{id}/friend-request-receive")
     public ResponseEntity<Iterable<TargetUserFriendDTO>> targetSendFriend(@PathVariable Long id) {
         Iterable<TargetUserFriendDTO> userFriendIterable = userFriendService.findUserFriendByTargetUser(id);
+        return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
+    }
+    @GetMapping("/user/{id}/v2/friend-request-receive")
+    public ResponseEntity<Iterable<UserFriend>> findAllFriendRequestReceiveByUserId(@PathVariable Long id) {
+        Iterable<UserFriend> userFriendIterable = userFriendService.findAllFriendRequestReceiveByUserId(id);
         return new ResponseEntity<>(userFriendIterable, HttpStatus.OK);
     }
 
@@ -125,11 +117,11 @@ public class UserFriendRestController {
         return new ResponseEntity<>(friendList, HttpStatus.OK);
     }
 
-    @GetMapping("/mutual-friend/{targetUserId}")
-    public ResponseEntity<List<MutualFriendsDTO>> getAcceptedFriendsOfUser(@PathVariable Long targetUserId) {
-        List<com.example.social_network.model.friend.dto.MutualFriendsDTO> friends = userFriendService.findAcceptedUserFriendsByTargetUserId(targetUserId);
-        return new ResponseEntity<>(friends, HttpStatus.OK);
-    }
+//    @GetMapping("/mutual-friend/{targetUserId}")
+//    public ResponseEntity<List<MutualFriendsDTO>> getAcceptedFriendsOfUser(@PathVariable Long targetUserId) {
+//        List<com.example.social_network.model.friend.dto.MutualFriendsDTO> friends = userFriendService.findAcceptedUserFriendsByTargetUserId(targetUserId);
+//        return new ResponseEntity<>(friends, HttpStatus.OK);
+//    }
 
 
     @GetMapping("/count-accepted-friends/{targetUserId}")
@@ -139,16 +131,39 @@ public class UserFriendRestController {
     }
 
     @GetMapping("/being-friend/{sourceId}/{targetId}")
-    public ResponseEntity<Optional<UserFriend>> getListFriendsOfUserIdWhereHaveBeenFriend(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
-        Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
-        System.out.println("Thong tin da la ban be chua");
-        System.out.println(relationShip.get().isAccepted());
-        if (relationShip.get().isAccepted() == false) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> getListFriendsOfUserIdWhereHaveBeenFriend(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+        if (targetId == sourceId) {
+            return new ResponseEntity<>(userFriendService.findAllFriendsByUserId(targetId), HttpStatus.OK);
+        } else {
+            Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
+            if(relationShip.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            System.out.println("Thong tin da la ban be chua");
+            System.out.println(relationShip.get().isAccepted());
+            if (!relationShip.get().isAccepted()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(relationShip, HttpStatus.OK);
         }
-        return new ResponseEntity<>(relationShip, HttpStatus.OK);
+
+
     }
 
+    @GetMapping("/check-relationship/{sourceId}/{targetId}")
+    public ResponseEntity<Optional<UserFriend>> checkRelationShip(@PathVariable("targetId") Long targetId, @PathVariable("sourceId") Long sourceId) {
+        if (targetId.equals(sourceId)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            Optional<UserFriend> relationShip = userFriendService.findRelationShip(targetId, sourceId);
+            if (relationShip.isEmpty()) {
+                return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+            }
+            if (relationShip.get().isAccepted()) {
+                return new ResponseEntity<>(relationShip, HttpStatus.OK);
+            } else return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
+        }
+    }
 
 }
 

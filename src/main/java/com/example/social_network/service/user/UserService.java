@@ -1,8 +1,10 @@
 package com.example.social_network.service.user;
 
+import com.example.social_network.dto.user_dto.UserId;
 import com.example.social_network.model.user.User;
-import com.example.social_network.dto.dto_user.UserId;
+import com.example.social_network.model.user_friend.UserFriend;
 import com.example.social_network.repo.user.IUserRepo;
+import com.example.social_network.service.user_friend.IUserFriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,41 +16,46 @@ import java.util.Optional;
  public class UserService implements IUserService {
 
     @Autowired
-    private IUserRepo IUserRepo;
+    private IUserRepo userRepo;
+    @Autowired
+    private IUserFriendService userFriendService;
+
     @Override
     public Iterable<User> findAll() {
-        return IUserRepo.findAll();
+        return userRepo.findAll();
     }
+
     @Override
     public Optional<User> findById(Long id) {
-      return IUserRepo.findById(id);
+        return userRepo.findById(id);
     }
 
 
     @Override
     public User save(User user) throws Exception {
-        if (IUserRepo.findUserByAccountName(user.getAccountName()).isPresent()) {
+        if (userRepo.findUserByAccountName(user.getAccountName()).isPresent()) {
             throw new Exception("Username already exists");
         }
 
-        if (IUserRepo.findUsersByEmail(user.getEmail()).isPresent()) {
+        if (userRepo.findUsersByEmail(user.getEmail()).isPresent()) {
             throw new Exception("Email already exists");
         }
 
-        return IUserRepo.save(user);
+        return userRepo.save(user);
     }
 
     public User getUserByUsername(String username) throws Exception {
-        Optional<User> optionalUser = IUserRepo.findUserByAccountName(username);
+        Optional<User> optionalUser = userRepo.findUserByAccountName(username);
         if (optionalUser.isPresent()) {
             return optionalUser.get();
         } else {
             throw new Exception("User not found");
         }
     }
+
     @Override
     public UserId getUserByIdExceptPassword(Long userId) {
-        Optional<User> userOptional = IUserRepo.findById(userId);
+        Optional<User> userOptional = userRepo.findById(userId);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             // ^ tạo đối tượng UserId với trường userId được lấy từ đối tượng User
@@ -62,9 +69,9 @@ import java.util.Optional;
 
     @Override
     public List<UserId> getAllUsersExceptPasswordAndBlock() {
-        List<User>users= IUserRepo.findAll();
-        List<UserId>userIdsList=new ArrayList<>();
-        for (User user :users) {
+        List<User> users = userRepo.findAll();
+        List<UserId> userIdsList = new ArrayList<>();
+        for (User user : users) {
             userIdsList.add(new UserId(user));
         }
         return userIdsList;
@@ -77,12 +84,12 @@ import java.util.Optional;
 
     @Override
     public List<User> findAllUsersByAccount(String account) {
-        return IUserRepo.findUsersByAccountNameContaining(account);
+        return userRepo.findUsersByAccountNameContaining(account);
     }
 
     @Override
     public Optional<User> findByAccountName(String accountName) {
-        return IUserRepo.findUserByAccountName(accountName);
+        return userRepo.findUserByAccountName(accountName);
     }
 
     @Override
@@ -92,15 +99,14 @@ import java.util.Optional;
 
     @Override
     public boolean checkPassword(User user, String password) {
-      return  user.getPassword().equals(password);
+        return user.getPassword().equals(password);
     }
 
 
     @Override
     public User update(User user) {
-        return IUserRepo.save(user);
+        return userRepo.save(user);
     }
-
 
 
 //    @Override
@@ -115,4 +121,46 @@ import java.util.Optional;
 //
 //        return null;
 //    }
+
+    @Override
+    public List<User> findMutualFriend(Long sourceUserId, Long targetUserId) {
+        List<UserFriend> sourceUserRelationList = new ArrayList<>();
+        List<UserFriend> targetUserRelationList = new ArrayList<>();
+        userFriendService.findAllFriendsByUserId(sourceUserId).forEach(sourceUserRelationList::add);
+        userFriendService.findAllFriendsByUserId(targetUserId).forEach(targetUserRelationList::add);
+
+        List<Long> listFriendIDSourceUser = new ArrayList<>();
+        List<Long> listFriendIDTargetUser = new ArrayList<>();
+
+        for (UserFriend relationshipSource : sourceUserRelationList){
+            for(UserFriend relationshipTarget : targetUserRelationList){
+                if (relationshipSource.getSourceUser().getUserId() == relationshipTarget.getSourceUser().getUserId()){
+
+                }
+            }
+        }
+
+        sourceUserRelationList.retainAll(targetUserRelationList);
+        List<Long> listUserId = new ArrayList<>();
+        for (int i = 0; i < sourceUserRelationList.size(); i++) {
+            if (sourceUserRelationList.get(i).getSourceUser().getUserId() == sourceUserId
+                    || sourceUserRelationList.get(i).getSourceUser().getUserId() == targetUserId){
+                listUserId.add(sourceUserRelationList.get(i).getTargetUser().getUserId());
+            }
+            else if (sourceUserRelationList.get(i).getTargetUser().getUserId() == sourceUserId
+            || sourceUserRelationList.get(i).getTargetUser().getUserId() == targetUserId) {
+                listUserId.add(sourceUserRelationList.get(i).getSourceUser().getUserId());
+            }
+        }
+        List<User> mutualFriend = new ArrayList<>();
+        for (int i = 0; i < listUserId.size(); i++) {
+            mutualFriend.add(userRepo.findById(listUserId.get(i)).get());
+        }
+        return mutualFriend;
+    }
+
+    @Override
+    public List<User> findUsersByGroupId(Long id) {
+        return userRepo.findUsersByGroupId(id);
+    }
 }

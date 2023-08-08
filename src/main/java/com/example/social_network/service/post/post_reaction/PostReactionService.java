@@ -1,6 +1,5 @@
 package com.example.social_network.service.post.post_reaction;
 
-import com.example.social_network.dto.dto.PostReactionDTO;
 import com.example.social_network.model.post.Post;
 import com.example.social_network.model.post.PostReaction;
 import com.example.social_network.repo.post.IPostReactionRepo;
@@ -8,8 +7,6 @@ import com.example.social_network.repo.post.IPostRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
