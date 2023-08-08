@@ -94,7 +94,7 @@ import java.util.Optional;
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return IUserRepo.findUserByEmail(email);
+        return userRepo.findUsersByEmail(email);
     }
 
     @Override
