@@ -20,7 +20,14 @@ public class Notification {
     private String type;
     private String content;
     private Date dateCreated;
+    private Long groupId;
     @ManyToOne
-    private User userId;
+    private User user;
 
+    public Notification(String content, Date dateCreated, User user,Long groupId) {
+        this.content = content;
+        this.dateCreated = dateCreated;
+        this.user = user;
+        this.groupId = groupId;
+    }
 }

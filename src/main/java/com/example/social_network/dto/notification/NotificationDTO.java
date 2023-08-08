@@ -17,6 +17,7 @@ public class NotificationDTO {
     private String dateCreated;
     private User userId;
     private Status status;
+    private Long groupId;
 
     public NotificationDTO(String content, String dateCreated, Status status) {
         this.content = content;

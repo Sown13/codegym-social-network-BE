@@ -9,6 +9,7 @@ import com.example.social_network.model.notification.Notification;
 import com.example.social_network.model.user.User;
 import com.example.social_network.repo.user.IUserRepo;
 import com.example.social_network.service.message.message.IMessageService;
+import com.example.social_network.service.notification.INotificationService;
 import com.example.social_network.service.user.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -31,6 +32,8 @@ public class MessageRestController {
     IUserService userService;
     @Autowired
     IMessageService messageService;
+    @Autowired
+    INotificationService notificationService;
 
     @MessageMapping("/message")
     @SendTo("/chatroom/public")
@@ -46,18 +49,22 @@ public class MessageRestController {
         messageToSave.setDateCreated(new Date());
         messageToSave.setTextContent(messageDTO.getTextContent());
         messageToSave.setRead(false);
-        messageService.save(messageToSave);
+        Message messageToGetId = messageService.save(messageToSave);
         simpMessagingTemplate.convertAndSendToUser(messageDTO.getGroupId().toString(), "/private",messageDTO);
 //        => /group/groupId/private
-        NotificationDTO notification = new NotificationDTO("Bạn có 1 tin nhắn mới" + messageDTO.getTextContent(),messageDTO.getDateCreated(),messageDTO.getStatus());
+        NotificationDTO notificationDTO = new NotificationDTO("Bạn có 1 tin nhắn mới từ " + messageDTO.getFullName(),messageDTO.getDateCreated(),messageDTO.getStatus());
         List<User> userList = userService.findUsersByGroupId(messageDTO
                 .getGroupId())
                 .stream()
                 .filter(user-> !user.getUserId().equals(messageDTO.getUserId())).collect(Collectors.toList());
         for (User user: userList) {
-            simpMessagingTemplate.convertAndSendToUser(user.getUserId().toString(),"/notification",notification);
+            Notification saveNotification = new Notification(notificationDTO.getContent(),new Date(),user,messageToGetId.getGroup().getGroupId());
+            notificationDTO.setGroupId(saveNotification.getGroupId());
+            notificationService.save(saveNotification);
+            simpMessagingTemplate.convertAndSendToUser(user.getUserId().toString(),"/notification",notificationDTO);
 //        =>/user/userId/notification
         }
+
         return messageDTO;
     }
 }
