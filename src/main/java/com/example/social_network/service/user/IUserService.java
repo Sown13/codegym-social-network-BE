@@ -11,6 +11,7 @@ public interface IUserService extends IGeneralService<User> {
     List<User> findAllUsersByAccount(String account);
 
     Optional<User> findByAccountName(String username);
+    Optional<User> findByEmail(String username);
      boolean checkPassword(User user, String password);
     User update( User user);
 

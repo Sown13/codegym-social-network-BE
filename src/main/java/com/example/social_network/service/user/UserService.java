@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService implements IUserService {
+ public class UserService implements IUserService {
 
     @Autowired
     private IUserRepo userRepo;
@@ -90,6 +90,11 @@ public class UserService implements IUserService {
     @Override
     public Optional<User> findByAccountName(String accountName) {
         return userRepo.findUserByAccountName(accountName);
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepo.findUsersByEmail(email);
     }
 
     @Override

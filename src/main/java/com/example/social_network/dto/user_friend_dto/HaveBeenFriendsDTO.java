@@ -9,6 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class HaveBeenFriendsDTO {
     private boolean isAccepted;
-
     private String friendType;
 }
