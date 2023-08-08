@@ -23,12 +23,16 @@ public class PostImageController {
     private IPostImageService postImageService;
     @PostMapping("")
     private ResponseEntity<?>createPostImage(@RequestBody PostImage postImage) throws Exception {
+        System.out.println(postImage.getImgUrl());
         Date date=new Date();
         postImage.setDateCreated(date);
         return new ResponseEntity<>(postImageService.save(postImage), HttpStatus.OK);
     }
     @PostMapping("/list")
     private ResponseEntity<?>addMultiplePostImage(@RequestBody List<PostImageDTO> postImageDTOList) {
+
+        System.out.println(postImageDTOList);
+
         Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         List<PostImage> postImageList = new ArrayList<>();
         for (PostImageDTO postImageDTO : postImageDTOList) {
@@ -71,5 +75,4 @@ public class PostImageController {
       }
       return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

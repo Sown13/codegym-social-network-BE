@@ -1,4 +1,5 @@
 package com.example.social_network.model.message;
+import com.example.social_network.model.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,5 +23,7 @@ public class Group {
     private List<GroupMember>groupMembers;
     @OneToMany(mappedBy = "group")
     private List<Message> messages;
+    @ManyToOne
+    private User owner;
 
 }
