@@ -64,6 +64,8 @@ public class UserRestController {
         try {
             Date now = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
             user.setCreatedDate(now);
+            user.setAvatar("https://firebasestorage.googleapis.com/v0/b/social-network-8069e.appspot.com/o/files%2Fdefault_avatar.png?alt=media&token=9a9960d1-b70d-4f60-acd8-4bc88277b686");
+            user.setBackground("https://firebasestorage.googleapis.com/v0/b/social-network-8069e.appspot.com/o/files%2F0%2F1691518935801?alt=media&token=93a398e5-b210-4d4f-b96a-360aa095d5ae");
             userService.save(user);
             return ResponseEntity.ok("User registered successfully");
         } catch (Exception e) {

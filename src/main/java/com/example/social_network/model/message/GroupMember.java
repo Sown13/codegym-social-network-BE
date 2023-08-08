@@ -23,6 +23,7 @@ public class GroupMember {
     private Date dateJoined;
     @ManyToOne
     @JsonIgnore
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)

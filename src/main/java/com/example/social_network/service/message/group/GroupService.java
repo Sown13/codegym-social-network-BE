@@ -55,7 +55,7 @@ public class GroupService implements IGroupService{
         Group group = new Group();
         group.setDateCreated(new Date());
         group.setOwner(new User(sourceUserId));
-        group.setGroupName("Nhóm chat của"+ sourceUserFullName +  "và" + targetUserFullName);
+        group.setGroupName("Nhóm chat của "+ sourceUserFullName);
         Group savedGroup = groupRepo.save(group);
         GroupMember groupMember1 = new GroupMember(new Date(),new User(sourceUserId),savedGroup);
         GroupMember groupMember2 = new GroupMember(new Date(),new User(tagetUserId),savedGroup);
