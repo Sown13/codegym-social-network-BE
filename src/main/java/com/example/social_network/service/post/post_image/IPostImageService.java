@@ -9,5 +9,6 @@ public interface IPostImageService extends IGeneralService<PostImage> {
     Iterable<PostImage> findImagesByPostId(Long id);
 
     List<PostImage> saveAll (List<PostImage> postImageList);
-
+   Iterable<PostImage>findImagesByUserId(Long userId);
+   Iterable<PostImage>findImagesByUserIdNotPublic(Long userId);
 }

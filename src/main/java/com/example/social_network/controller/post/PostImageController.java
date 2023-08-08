@@ -55,6 +55,17 @@ public class PostImageController {
     public ResponseEntity<Iterable<PostImage>> getImagesByPostId(@PathVariable Long id) {
         return new ResponseEntity<>(postImageService.findImagesByPostId(id), HttpStatus.OK);
     }
+    @GetMapping("/user/{id}")
+    public ResponseEntity<?>getImagesByUserId(@PathVariable Long id){
+        Iterable<PostImage>imageIterableList=postImageService.findImagesByUserId(id);
+        return new ResponseEntity<>(imageIterableList,HttpStatus.OK);
+    }
+      @GetMapping("/user/not-public/{id}")
+    public ResponseEntity<?>getImagesByUserIdNotPublic(@PathVariable Long id){
+        Iterable<PostImage>imageIterableList=postImageService.findImagesByUserIdNotPublic(id);
+        return new ResponseEntity<>(imageIterableList,HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<?>updateImagePost(@PathVariable Long id,@RequestBody PostImage postImage){
         Optional<PostImage> postImageOptional=postImageService.findById(id);

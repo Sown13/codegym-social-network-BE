@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface IGroupService extends IGeneralService<Group> {
     List<Group> findGroupsByUserId(Long userId);
+
+    Group createChatRoom(Long sourceUserId, Long targetUserId);
 }

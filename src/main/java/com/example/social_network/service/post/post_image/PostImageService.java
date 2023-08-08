@@ -42,4 +42,14 @@ public class PostImageService implements IPostImageService {
     public List<PostImage> saveAll(List<PostImage> postImageList) {
        return postImageRepo.saveAll(postImageList);
     }
+
+    @Override
+    public Iterable<PostImage> findImagesByUserId(Long userId) {
+        return postImageRepo.findImagesByUserId(userId);
+    }
+
+    @Override
+    public Iterable<PostImage> findImagesByUserIdNotPublic(Long userId) {
+        return postImageRepo.findImagesByUserIdNotPublic(userId);
+    }
 }

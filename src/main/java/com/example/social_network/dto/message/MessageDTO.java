@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 public class MessageDTO {
     private String textContent;
     private Long userId;
-    private String userName;
+    private String fullName;
     private Long groupId;
     private String groupName;
     private Status status;
